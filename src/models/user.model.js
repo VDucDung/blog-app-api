@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
@@ -17,19 +16,40 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
+      select: false,
       required: true,
     },
-    profilePic: {
+    phone: {
       type: String,
-      default: '',
+      trim: true,
+    },
+    dateOfBirth: {
+      type: Date,
+      default: '2000-01-01',
+    },
+    gender: {
+      type: String,
+      enum: ['male', 'female'],
+      default: 'male',
+    },
+    isVerify: {
+      type: Boolean,
+    },
+    isLocked: {
+      type: Boolean,
     },
     role: {
       type: String,
       enum: ['admin', 'user'],
       default: 'user',
     },
-    isVerify: {
-      type: Boolean,
+    avatar: {
+      type: String,
+      default: '',
+    },
+    lastAcctive: {
+      type: Date,
+      default: Date.now,
     },
   },
   {
