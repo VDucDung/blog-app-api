@@ -1,0 +1,9 @@
+{
+  "system": {
+    "resourceNotFound": "Resource not found"
+  },
+  "user": {
+    "notFound": "User not found",
+    "existsEmail": "Email already exists"
+  }
+}

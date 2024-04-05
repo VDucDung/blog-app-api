@@ -1,0 +1,9 @@
+{
+  "system": {
+    "resourceNotFound": "Không tìm thấy tài nguyên"
+  },
+  "user": {
+    "notFound": "Không tìm thấy người dùng",
+    "existsEmail": "Địa chỉ email đã tồn tại"
+  }
+}
