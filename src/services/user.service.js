@@ -49,6 +49,13 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
+const lockUserById = async (userId) => {
+  const user = await getUserById(userId);
+  Object.assign(user, { isLocked: !user.isLocked });
+  await user.save();
+  return user;
+};
+
 module.exports = {
   getUserByEmail,
   createUser,
@@ -56,4 +63,5 @@ module.exports = {
   getUsersByKeyword,
   updateUserById,
   deleteUserById,
+  lockUserById,
 };

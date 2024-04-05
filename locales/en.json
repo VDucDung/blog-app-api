@@ -4,6 +4,12 @@
   },
   "user": {
     "notFound": "User not found",
-    "existsEmail": "Email already exists"
+    "existsEmail": "Email already exists",
+    "roleInvalid": "This role is not valid",
+    "lockedSuccess": "User locked successfully",
+    "unlockedSuccess": "User unlocked successfully",
+    "userLocked": "Account locked",
+    "usernameLength": "User name must be at least 2 characters",
+    "phoneLength": "Phone number must be between 5 and 12 characters"
   }
 }

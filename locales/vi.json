@@ -4,6 +4,12 @@
   },
   "user": {
     "notFound": "Không tìm thấy người dùng",
-    "existsEmail": "Địa chỉ email đã tồn tại"
+    "existsEmail": "Địa chỉ email đã tồn tại",
+    "roleInvalid": "Chức vụ này không chính xác",
+    "lockedSuccess": "Khoá người dùng thành công",
+    "unlockedSuccess": "Mở khoá người dùng thành công",
+    "userLocked": "Tài khoản đã bị khoá",
+    "usernameLength": "Tên đăng nhập phải ít nhât 2 ký tự",
+    "phoneLength": "Số điện thoại từ 8 đến 13 ký tự"
   }
 }
