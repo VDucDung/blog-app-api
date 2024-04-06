@@ -11,5 +11,9 @@
     "userLocked": "Tài khoản đã bị khoá",
     "usernameLength": "Tên đăng nhập phải ít nhât 2 ký tự",
     "phoneLength": "Số điện thoại từ 8 đến 13 ký tự"
+  },
+  "auth": {
+    "invalidLogin": "Tài khoản hoặc mật khẩu không chính xác",
+    "loginSuccess": "Đăng nhập thành công"
   }
 }

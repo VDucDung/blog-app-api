@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
-    lastAcctive: {
+    lastActive: {
       type: Date,
       default: Date.now,
     },
