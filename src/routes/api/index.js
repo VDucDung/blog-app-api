@@ -11,6 +11,10 @@ const listRoutesApi = [
     path: '/auth',
     route: require('./auth.route'),
   },
+  {
+    path: '/posts',
+    route: require('./post.route'),
+  },
 ];
 
 listRoutesApi.forEach((route) => {
