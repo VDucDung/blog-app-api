@@ -15,3 +15,5 @@ userRouter
   .put(validate(userValidation.updateUser), userController.updateUser)
   .delete(validate(userValidation.deleteUser), userController.deleteUser)
   .options(validate(userValidation.lockUser), userController.lockUser);
+
+module.exports = userRouter;

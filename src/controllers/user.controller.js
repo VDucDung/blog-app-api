@@ -40,8 +40,6 @@ const lockUser = catchAsync(async (req, res) => {
     .json(response(httpStatus.OK, user.isLocked ? userMessage().LOCKED_SUCCESS : userMessage().UNLOCKED_SUCCESS, user));
 });
 
-
-
 module.exports = {
   createUser,
   getUsers,
