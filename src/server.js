@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   next(i18nService.setLocale(req, res));
 });
 
-app.use('/api/v1', apiRoute)
+app.use('/api/v1', apiRoute);
 
 app.use('/', baseRouter);
 

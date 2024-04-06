@@ -53,7 +53,6 @@ const deletePost = {
   }),
 };
 
-
 module.exports = {
   createPost,
   getPosts,

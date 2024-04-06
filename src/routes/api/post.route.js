@@ -13,6 +13,6 @@ postRouter
   .route('/:postId')
   .get(validate(postValidation.getPost), postController.getPost)
   .put(validate(postValidation.updatePost), postController.updatePost)
-  .delete(validate(postValidation.deletePost), postController.deletePost)
+  .delete(validate(postValidation.deletePost), postController.deletePost);
 
 module.exports = postRouter;
