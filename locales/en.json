@@ -1,19 +1,50 @@
 {
   "system": {
-    "resourceNotFound": "Resource not found"
+    "resourceNotFound": "Resource not found",
+    "manyRequests": "Too many requests, please try again later",
+    "imageInvalid": "Image format not supported",
+    "imageMaxSize": "Image size too large, please choose another one"
   },
   "user": {
     "notFound": "User not found",
     "existsEmail": "Email already exists",
+    "findSuccess": "User found successfully",
+    "findListSuccess": "Find user list successfully",
+    "createSuccess": "User created successfully",
+    "updateSuccess": "User updated successfully",
+    "deleteSuccess": "User deleted successfully",
+    "incorrectId": "Incorrect MongoDB Id format",
+    "passwordLength": "Password must be longer than 8 characters",
+    "passwordInvalid": "Password must contain at least 1 letter and 1 number",
+    "emailInvalid": "Email is not in the correct format",
     "roleInvalid": "This role is not valid",
     "lockedSuccess": "User locked successfully",
     "unlockedSuccess": "User unlocked successfully",
     "userLocked": "Account locked",
-    "usernameLength": "User name must be at least 2 characters",
+    "usernameLength": "User name must be more than 2 characters",
     "phoneLength": "Phone number must be between 5 and 12 characters"
   },
   "auth": {
     "invalidLogin": "Invalid username or password",
-    "loginSuccess": "Login successfully"
+    "loginSuccess": "Login successfully",
+    "registerSuccess": "Register successfully",
+    "refreshTokenSuccess": "Refresh token successfully",
+    "invalidToken": "Invalid token",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Forbidden",
+    "tokenExpired": "Token expired, please login again",
+    "getMeSuccess": "Get me successfully",
+    "invalidPassword": "Invalid password",
+    "changePasswordSuccess": "Change password successfully",
+    "updateMeSuccess": "Update me successfully"
+  },
+  "post": {
+    "notFound": "Post not found",
+    "findSuccess": "Post found successfully",
+    "findListSuccess": "Post list found successfully",
+    "createSuccess": "New Post created successfully",
+    "updateSuccess": "Post updated successfully",
+    "deleteSuccess": "Post deleted successfully",
+    "alreadyExists": "Post already exists"
   }
 }

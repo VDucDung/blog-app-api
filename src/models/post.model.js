@@ -6,11 +6,13 @@ const postSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
+      unique: true,
     },
     desc: {
       type: String,
       trim: true,
       required: true,
+      unique: true,
     },
     photo: {
       type: String,

@@ -1,19 +1,50 @@
 {
   "system": {
-    "resourceNotFound": "Không tìm thấy tài nguyên"
+    "resourceNotFound": "Không tìm thấy tài nguyên",
+    "manyRequests": "Gửi quá nhiều yêu cầu, vui lòng thử lại sau một thời gian",
+    "imageInvalid": "Định dạng hình ảnh không hỗ trợ",
+    "imageMaxSize": "Hình ảnh có dung lượng quá lớn, vui lòng chọn lại"
   },
   "user": {
     "notFound": "Không tìm thấy người dùng",
-    "existsEmail": "Địa chỉ email đã tồn tại",
+    "existsEmail": "Email đã tồn tại",
+    "findSuccess": "Tìm thành công",
+    "findListSuccess": "Tìm danh sách người dùng thành công",
+    "createSuccess": "Tạo mới người dùng thành công",
+    "updateSuccess": "Cập nhật người dùng thành công",
+    "deleteSuccess": "Xóa người dùng thành công",
+    "incorrectId": "không đúng định dạng Id của MongoDB",
+    "passwordLength": "Mật khẩu lớn hơn 8 ký tự",
+    "passwordInvalid": "Mật khẩu phải chứa 1 ký tự và 1 số",
+    "emailInvalid": "Email không đúng định dạng",
     "roleInvalid": "Chức vụ này không chính xác",
     "lockedSuccess": "Khoá người dùng thành công",
     "unlockedSuccess": "Mở khoá người dùng thành công",
     "userLocked": "Tài khoản đã bị khoá",
-    "usernameLength": "Tên đăng nhập phải ít nhât 2 ký tự",
+    "usernameLength": "Tên đăng nhập phải nhiều hơn 2 ký tự",
     "phoneLength": "Số điện thoại từ 8 đến 13 ký tự"
   },
   "auth": {
     "invalidLogin": "Tài khoản hoặc mật khẩu không chính xác",
-    "loginSuccess": "Đăng nhập thành công"
+    "loginSuccess": "Đăng nhập thành công",
+    "registerSuccess": "Đăng ký thành công",
+    "refreshTokenSuccess": "Refresh token thành công",
+    "invalidToken": "Token không chính xác",
+    "unauthorized": "Bạn cần đăng nhập",
+    "forbidden": "Bạn không có quyền truy cập",
+    "tokenExpired": "Token đã hết hạn vui lòng login lại",
+    "getMeSuccess": "Thông tin cá nhân của bạn",
+    "invalidPassword": "Mật khẩu không chính xác",
+    "changePasswordSuccess": "Đổi mật khẩu thành công",
+    "updateMeSuccess": "Cập nhật thông tin cá nhân thành công"
+  },
+  "post": {
+    "notFound": "Không tìm thấy bài viết",
+    "findSuccess": "Tìm thành công",
+    "findListSuccess": "Tìm danh sách bài viết thành công",
+    "createSuccess": "Tạo mới bài viết thành công",
+    "updateSuccess": "Cập nhật bài viết thành công",
+    "deleteSuccess": "Xóa bài viết thành công",
+    "alreadyExists": "Bài viết đã tồn tại"
   }
 }
