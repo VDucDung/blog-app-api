@@ -8,7 +8,6 @@ const postMessage = () => {
     CREATE_SUCCESS: i18nService.translate('post', 'createSuccess'),
     UPDATE_SUCCESS: i18nService.translate('post', 'updateSuccess'),
     DELETE_SUCCESS: i18nService.translate('post', 'deleteSuccess'),
-    INCORRECT_ID: i18nService.translate('post', 'incorrectId'),
     ALREADY_EXISTS: i18nService.translate('post', 'alreadyExists'),
   };
 };

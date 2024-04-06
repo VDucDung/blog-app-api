@@ -46,5 +46,14 @@
     "updateSuccess": "Cập nhật bài viết thành công",
     "deleteSuccess": "Xóa bài viết thành công",
     "alreadyExists": "Bài viết đã tồn tại"
+  },
+  "comment": {
+    "notFound": "Không tìm thấy bình luận",
+    "findSuccess": "Tìm thành công",
+    "findListSuccess": "Tìm danh sách bình luận thành công",
+    "createSuccess": "Tạo mới bình luận thành công",
+    "updateSuccess": "Cập nhật bình luận thành công",
+    "deleteSuccess": "Xóa bình luận thành công",
+    "alreadyExists": "Bình luận đã tồn tại"
   }
 }

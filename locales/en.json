@@ -46,5 +46,14 @@
     "updateSuccess": "Post updated successfully",
     "deleteSuccess": "Post deleted successfully",
     "alreadyExists": "Post already exists"
+  },
+  "comment": {
+    "notFound": "Comment not found",
+    "findSuccess": "Comment found successfully",
+    "findListSuccess": "Comment list found successfully",
+    "createSuccess": "New Comment created successfully",
+    "updateSuccess": "Comment updated successfully",
+    "deleteSuccess": "Comment deleted successfully",
+    "alreadyExists": "Comment already exists"
   }
 }

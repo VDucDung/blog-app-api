@@ -4,15 +4,15 @@ const ApiError = require('../utils/ApiError');
 const { postMessage } = require('../messages');
 const SearchFeature = require('../utils/SearchFeature');
 
-const getUsersByuserId = async (userId) => {
-  const post = await Post.find({ userId });
-  return post;
+const getPostsByuserId = async (userId) => {
+  const posts = await Post.find({ userId });
+  return posts;
 };
-const getUserByTitle = async (title) => {
+const getPostByTitle = async (title) => {
   const post = await Post.findOne({ title });
   return post;
 };
-const getUserByDesc = async (desc) => {
+const getPostByDesc = async (desc) => {
   const post = await Post.findOne({ desc });
   return post;
 };
@@ -25,7 +25,7 @@ const getPostById = async (id) => {
 };
 
 const createPost = async (postBody) => {
-  if ((await getUserByTitle(postBody.title)) && (await getUserByDesc(postBody.desc))) {
+  if ((await getPostByTitle(postBody.title)) && (await getPostByDesc(postBody.desc))) {
     throw new ApiError(httpStatus.BAD_REQUEST, postMessage().ALREADY_EXISTS);
   }
   const post = await post.create(postBody);
@@ -52,9 +52,9 @@ const deletePostById = async (postId) => {
 };
 
 module.exports = {
-  getUsersByuserId,
-  getUserByTitle,
-  getUserByDesc,
+  getPostsByuserId,
+  getPostByTitle,
+  getPostByDesc,
   getPostById,
   createPost,
   getPostsByKeyword,
