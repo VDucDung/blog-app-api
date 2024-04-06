@@ -32,7 +32,7 @@ const createPost = async (postBody) => {
   return post;
 };
 
-const getUsersByKeyword = async (requestQuery) => {
+const getPostsByKeyword = async (requestQuery) => {
   const searchFeatures = new SearchFeature(Post);
   const { results, ...detailResult } = await searchFeatures.getResults(requestQuery, ['title', 'userId', 'desc']);
   return { posts: results, ...detailResult };
@@ -57,7 +57,7 @@ module.exports = {
   getUserByDesc,
   getPostById,
   createPost,
-  getUsersByKeyword,
+  getPostsByKeyword,
   updatePostById,
   deletePostById,
 };
