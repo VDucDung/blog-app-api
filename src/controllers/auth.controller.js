@@ -13,7 +13,6 @@ const login = catchAsync(async (req, res) => {
 });
 
 const register = catchAsync(async (req, res) => {
-  console.log(req.body);
   const { username, email, password } = req.body;
   const { user, accessToken, refreshToken } = await authService.register(username, email, password);
   res
