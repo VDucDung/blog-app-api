@@ -1,6 +1,6 @@
 const { i18nService } = require('../config');
 
-const postMessage = () => {
+const commentMessage = () => {
   return {
     NOT_FOUND: i18nService.translate('comment', 'notFound'),
     FIND_SUCCESS: i18nService.translate('comment', 'findSuccess'),
@@ -12,4 +12,4 @@ const postMessage = () => {
   };
 };
 
-module.exports = postMessage;
+module.exports = commentMessage;

@@ -55,5 +55,14 @@
     "updateSuccess": "Comment updated successfully",
     "deleteSuccess": "Comment deleted successfully",
     "alreadyExists": "Comment already exists"
+  },
+  "category": {
+    "notFound": "Category not found",
+    "findSuccess": "Category found successfully",
+    "findListSuccess": "Category list found successfully",
+    "createSuccess": "New Category created successfully",
+    "updateSuccess": "Category updated successfully",
+    "deleteSuccess": "Category deleted successfully",
+    "alreadyExists": "Category already exists"
   }
 }

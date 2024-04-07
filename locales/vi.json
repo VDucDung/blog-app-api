@@ -55,5 +55,14 @@
     "updateSuccess": "Cập nhật bình luận thành công",
     "deleteSuccess": "Xóa bình luận thành công",
     "alreadyExists": "Bình luận đã tồn tại"
+  },
+  "category": {
+    "notFound": "Không tìm thấy thể loại",
+    "findSuccess": "Tìm thành công",
+    "findListSuccess": "Tìm danh sách thể loại thành công",
+    "createSuccess": "Tạo mới thể loại thành công",
+    "updateSuccess": "Cập nhật thể loại thành công",
+    "deleteSuccess": "Xóa thể loại thành công",
+    "alreadyExists": "thể loại đã tồn tại"
   }
 }
