@@ -15,6 +15,10 @@ const listRoutesApi = [
     path: '/posts',
     route: require('./post.route'),
   },
+  {
+    path: '/comments',
+    route: require('./comment.route'),
+  },
 ];
 
 listRoutesApi.forEach((route) => {
