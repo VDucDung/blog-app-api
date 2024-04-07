@@ -8,9 +8,9 @@ const env = {
     'mongodb+srv://vuducdung:vudung2003@cluster0.pozzglb.mongodb.net/?retryWrites=true&w=majority&appName=BlogApp',
   jwt: {
     secretAccess: process.env.JWT_SECRET_ACCESS || 'secret-access',
-    expiresAccessToken: process.env.JWT_EXPIRES_ACCESS_MINUTES || '10',
+    expiresAccessToken: process.env.JWT_EXPIRES_ACCESS_MINUTES + 'm' || '10m',
     secretRefresh: process.env.JWT_SECRET_REFRESH || 'secret-refresh',
-    expiresRefreshToken: process.env.JWT_EXPIRES_REFRESH_MINUTES || '1000',
+    expiresRefreshToken: process.env.JWT_EXPIRES_REFRESH_MINUTES + 'm' || '1200m',
   },
 };
 

@@ -20,7 +20,13 @@ const register = catchAsync(async (req, res) => {
     .json(response(httpStatus.CREATED, authMessage().REGISTER_SUCCESS, { user, accessToken, refreshToken }));
 });
 
+const refreshToken = catchAsync(async (req, res) => {
+  const { refreshToken } = req.body;
+  const { accessToken } = await authService.refreshToken(refreshToken);
+  res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().REFRESH_TOKEN_SUCCESS, { accessToken }));
+});
 module.exports = {
   login,
   register,
+  refreshToken,
 };
