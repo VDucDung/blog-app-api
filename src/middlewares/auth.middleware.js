@@ -33,7 +33,14 @@ const extractToken = (req) => {
   }
   return token;
 };
+const authorize = (rolesAllow) => (req, res, next) => {
+  if (!rolesAllow.includes(req.user.role)) {
+    return next(new ApiError(httpStatus.FORBIDDEN, authMessage().FORBIDDEN));
+  }
+  next();
+};
 
 module.exports = {
   auth,
+  authorize,
 };
