@@ -6,6 +6,11 @@ const env = {
   mongoURI:
     process.env.MONGO_URI ||
     'mongodb+srv://vuducdung:vudung2003@cluster0.pozzglb.mongodb.net/?retryWrites=true&w=majority&appName=BlogApp',
+  admin: {
+    email: process.env.ADMIN_EMAIL || 'admin@blogapp.com',
+    password: process.env.ADMIN_PASSWORD || 'admin@123',
+    fullname: 'Blog App Admin',
+  },
   jwt: {
     secretAccess: process.env.JWT_SECRET_ACCESS || 'secret-access',
     expiresAccessToken: process.env.JWT_EXPIRES_ACCESS_MINUTES + 'm' || '10m',

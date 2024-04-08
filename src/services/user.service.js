@@ -1,9 +1,10 @@
-const { User } = require('../models');
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
-const { userMessage } = require('../messages');
 const SearchFeature = require('../utils/SearchFeature');
 
+const { env } = require('../config');
+const { User } = require('../models');
+const { userMessage } = require('../messages');
 const getUserByEmail = async (email) => {
   const user = await User.findOne({ email }).select('+password');
   return user;
@@ -55,7 +56,20 @@ const lockUserById = async (userId) => {
   await user.save();
   return user;
 };
+const createAdmin = async () => {
+  const { email, password, fullname } = env.admin;
+  let admin = await User.findOne({ email });
 
+  if (!admin) {
+    await User.create({ fullname, email, password, role: 'admin' });
+  } else {
+    admin.fullname = fullname;
+    admin.email = email;
+    admin.password = password;
+    admin.role = 'admin';
+    await admin.save();
+  }
+};
 module.exports = {
   getUserByEmail,
   createUser,
@@ -64,4 +78,5 @@ module.exports = {
   updateUserById,
   deleteUserById,
   lockUserById,
+  createAdmin
 };
