@@ -5,7 +5,7 @@ const createPost = {
   body: Joi.object().keys({
     title: Joi.string().required(),
     desc: Joi.string().required(),
-    photo: Joi.string(),
+    image: Joi.string(),
     categories: Joi.array(),
     userId: Joi.string().custom(objectId),
   }),
@@ -20,7 +20,7 @@ const getPosts = {
     lang: Joi.string(),
     title: Joi.string().allow(null, ''),
     desc: Joi.string().allow(null, ''),
-    photo: Joi.string().allow(null, ''),
+    image: Joi.string().allow(null, ''),
     categories: Joi.array().allow(null, ''),
     userId: Joi.string().optional().custom(objectId),
   }),
@@ -40,7 +40,7 @@ const updatePost = {
     .keys({
       title: Joi.string(),
       desc: Joi.string(),
-      photo: Joi.string().allow(null, ''),
+      image: Joi.string().allow(null, ''),
       categories: Joi.array().allow(null, ''),
       userId: Joi.string().optional().custom(objectId),
     })

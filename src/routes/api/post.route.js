@@ -10,12 +10,23 @@ const postRouter = express.Router();
 postRouter
   .route('/')
   .get(validate(postValidation.getPosts), postController.getPosts)
-  .post(auth, uploadService.uploadImage.single('image'), validate(postValidation.createPost), postController.createPost);
+  .post(
+    auth,
+    uploadService.uploadImage.single('image'),
+    validate(postValidation.createPost),
+    postController.createPost,
+  );
 
 postRouter
   .route('/:postId')
   .get(auth, authorize('admin'), validate(postValidation.getPost), postController.getPost)
-  .put(auth, authorize('admin'), uploadService.uploadImage.single('image'), validate(postValidation.updatePost), postController.updatePost)
+  .put(
+    auth,
+    authorize('admin'),
+    uploadService.uploadImage.single('image'),
+    validate(postValidation.updatePost),
+    postController.updatePost,
+  )
   .delete(auth, authorize('admin'), validate(postValidation.deletePost), postController.deletePost);
 
 module.exports = postRouter;
