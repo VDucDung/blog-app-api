@@ -23,10 +23,7 @@ const getCommentById = async (id) => {
 };
 
 const createComment = async (commentBody) => {
-  if (await getCommentById(commentBody.id)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, commentMessage().ALREADY_EXISTS);
-  }
-  const comment = await comment.create(commentBody);
+  const comment = await Comment.create(commentBody);
   return comment;
 };
 

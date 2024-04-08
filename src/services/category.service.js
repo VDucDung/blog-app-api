@@ -13,9 +13,6 @@ const getCategoryById = async (id) => {
 };
 
 const createCategory = async (categoryBody) => {
-  if (await getCategoryById(categoryBody.id)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, categoryMessage().ALREADY_EXISTS);
-  }
   const category = await category.create(categoryBody);
   return category;
 };

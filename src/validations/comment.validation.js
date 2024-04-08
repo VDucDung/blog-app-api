@@ -16,7 +16,7 @@ const getComments = {
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
     lang: Joi.string(),
-    comment: Joi.string().required(),
+    comment: Joi.string().allow(null, ''),
     postId: Joi.string().optional().custom(objectId),
     userId: Joi.string().optional().custom(objectId),
   }),
