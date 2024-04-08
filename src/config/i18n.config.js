@@ -1,33 +1,29 @@
 const i18n = require('i18n');
 const path = require('path');
 
-const cookieName = 'lang';
-const headerName = 'accept-language';
-const languageDefault = 'vi';
-
-const locales = ['en', 'vi'];
+const { COOKIE_NAME, HEADER_NAME, LANGUAGE_DEFAULT, LOCALES } = require('../constants');
 
 class I18nService {
   constructor() {
     i18n.configure({
-      locales: locales,
+      locales: LOCALES,
       directory: path.join(__dirname, '../../locales'),
-      defaultLocale: languageDefault,
+      defaultLocale: LANGUAGE_DEFAULT,
     });
   }
 
   isValidLanguage(lang) {
-    return locales.includes(lang);
+    return LOCALES.includes(lang);
   }
 
   setLocale(req, res) {
     const lang = this.isValidLanguage(req.query?.lang)
       ? req.query.lang
-      : this.isValidLanguage(req.cookies?.[cookieName])
-        ? req.cookies[cookieName]
-        : this.isValidLanguage(req.headers[headerName])
-          ? req.headers[headerName]
-          : languageDefault;
+      : this.isValidLanguage(req.cookies?.[COOKIE_NAME])
+        ? req.cookies[COOKIE_NAME]
+        : this.isValidLanguage(req.headers[HEADER_NAME])
+          ? req.headers[HEADER_NAME]
+          : LANGUAGE_DEFAULT;
     i18n.setLocale(lang);
   }
 
