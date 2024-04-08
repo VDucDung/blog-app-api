@@ -28,7 +28,7 @@ const createPost = async (postBody) => {
   if ((await getPostByTitle(postBody.title)) && (await getPostByDesc(postBody.desc))) {
     throw new ApiError(httpStatus.BAD_REQUEST, postMessage().ALREADY_EXISTS);
   }
-  const post = await post.create(postBody);
+  const post = await Post.create(postBody);
   return post;
 };
 
