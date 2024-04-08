@@ -18,6 +18,16 @@ const env = {
     timeAuth: process.env.RATE_LIMIT_TIME_AUTH || 3,
     totalAuth: process.env.RATE_LIMIT_TOTAL_AUTH || 15,
   },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
+  },
+  image: {
+    folderName: 'blog-app',
+    typeAllow: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
+    maxFileSize: (process.env.MAX_FILE_SIZE_IMAGE_MB || 3) * 1024 * 1024,
+  },
 };
 
 module.exports = env;
