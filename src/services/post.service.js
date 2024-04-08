@@ -1,8 +1,10 @@
-const { Post } = require('../models');
 const httpStatus = require('http-status');
+
+const { Post } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { postMessage } = require('../messages');
 const SearchFeature = require('../utils/SearchFeature');
+const cacheService = require('../services/cache.service');
 
 const getPostsByuserId = async (userId) => {
   const posts = await Post.find({ userId });
@@ -33,8 +35,14 @@ const createPost = async (postBody) => {
 };
 
 const getPostsByKeyword = async (requestQuery) => {
+  const key = JSON.stringify(requestQuery);
+  const productsCache = cacheService.get(key);
+  if (productsCache) return productsCache;
+
   const searchFeatures = new SearchFeature(Post);
   const { results, ...detailResult } = await searchFeatures.getResults(requestQuery, ['title', 'userId', 'desc']);
+
+  cacheService.set(key, { products: results, ...detailResult });
   return { posts: results, ...detailResult };
 };
 

@@ -31,7 +31,6 @@ class CacheService {
     return this.cache.has(key);
   }
 
-  // take = get + del
   take(key) {
     return this.cache.take(key);
   }
