@@ -5,16 +5,19 @@ const validate = require('../../middlewares/validate.middleware');
 const { auth, authorize } = require('../../middlewares/auth.middleware');
 const userRouter = express.Router();
 
+userRouter.use(auth);
+userRouter.use(authorize('admin'));
+
 userRouter
   .route('/')
   .get(validate(userValidation.getUsers), userController.getUsers)
-  .post(auth, validate(userValidation.createUser), userController.createUser);
+  .post(validate(userValidation.createUser), userController.createUser);
 
 userRouter
   .route('/:userId')
-  .get(auth, authorize('admin'), validate(userValidation.getUser), userController.getUser)
-  .put(auth, authorize('admin'), validate(userValidation.updateUser), userController.updateUser)
-  .delete(auth, authorize('admin'), validate(userValidation.deleteUser), userController.deleteUser)
-  .options(auth, authorize('admin'), validate(userValidation.lockUser), userController.lockUser);
+  .get(validate(userValidation.getUser), userController.getUser)
+  .put(validate(userValidation.updateUser), userController.updateUser)
+  .delete(validate(userValidation.deleteUser), userController.deleteUser)
+  .options(validate(userValidation.lockUser), userController.lockUser);
 
 module.exports = userRouter;
