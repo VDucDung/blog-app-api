@@ -36,13 +36,13 @@ const createPost = async (postBody) => {
 
 const getPostsByKeyword = async (requestQuery) => {
   const key = JSON.stringify(requestQuery);
-  const productsCache = cacheService.get(key);
-  if (productsCache) return productsCache;
+  const postsCache = cacheService.get(key);
+  if (postsCache) return postsCache;
 
   const searchFeatures = new SearchFeature(Post);
   const { results, ...detailResult } = await searchFeatures.getResults(requestQuery, ['title', 'userId', 'desc']);
 
-  cacheService.set(key, { products: results, ...detailResult });
+  cacheService.set(key, { posts: results, ...detailResult });
   return { posts: results, ...detailResult };
 };
 

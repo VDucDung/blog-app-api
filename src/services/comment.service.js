@@ -1,6 +1,8 @@
-const { Comment } = require('../models');
 const httpStatus = require('http-status');
+
+const { Comment } = require('../models');
 const ApiError = require('../utils/ApiError');
+const cacheService = require('./cache.service');
 const { commentMessage } = require('../messages');
 const SearchFeature = require('../utils/SearchFeature');
 
@@ -29,8 +31,14 @@ const createComment = async (commentBody) => {
 };
 
 const getCommentsByKeyword = async (requestQuery) => {
+  const key = JSON.stringify(requestQuery);
+  const commentsCache = cacheService.get(key);
+  if (commentsCache) return commentsCache;
+
   const searchFeatures = new SearchFeature(Comment);
   const { results, ...detailResult } = await searchFeatures.getResults(requestQuery, ['comment', 'userId', 'postId']);
+
+  cacheService.set(key, { comments: results, ...detailResult });
   return { comments: results, ...detailResult };
 };
 
