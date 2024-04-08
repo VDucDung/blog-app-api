@@ -21,8 +21,28 @@ const refreshToken = {
   }),
 };
 
+const changePassword = {
+  body: Joi.object().keys({
+    oldPassword: Joi.string().required(password),
+    newPassword: Joi.string().required(password),
+  }),
+};
+
+const updateMe = {
+  body: Joi.object()
+    .keys({
+      username: Joi.string().optional().custom(username),
+      dateOfBirth: Joi.date().allow(null, '').less('now'),
+      gender: Joi.string().allow('male', 'female', ''),
+      avatar: Joi.string(),
+    })
+    .min(1),
+};
+
 module.exports = {
   login,
   register,
   refreshToken,
+  changePassword,
+  updateMe,
 };

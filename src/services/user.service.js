@@ -78,5 +78,5 @@ module.exports = {
   updateUserById,
   deleteUserById,
   lockUserById,
-  createAdmin
+  createAdmin,
 };
