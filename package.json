@@ -4,9 +4,13 @@
   "description": "",
   "main": "./src/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "format": "prettier --write src/**/*.{js,json}"
+    "start": "nodemon src/server.js",
+    "format": "prettier --write src/**/*.{js,json}",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel ./src -d ./build/src",
+    "build": "npm run clean && npm run build-babel",
+    "production": "npm run build && cross-env NODE_ENV=production node ./build/src/server.js",
+    "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node ./src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +38,7 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
+    "@babel/node": "^7.23.9",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5"
   }
