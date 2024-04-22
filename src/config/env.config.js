@@ -2,20 +2,19 @@ require('dotenv').config();
 
 const env = {
   port: process.env.PORT || 3000,
-  nodeEnv: process.env.NODE_ENV || 'development',
+  nodeEnv: process.env.NODE_ENV,
   mongoURI:
-    process.env.MONGO_URI ||
-    'mongodb+srv://vuducdung:vudung2003@cluster0.pozzglb.mongodb.net/?retryWrites=true&w=majority&appName=BlogApp',
+    process.env.MONGO_URI,
   admin: {
-    email: process.env.ADMIN_EMAIL || 'admin@blogapp.com',
-    password: process.env.ADMIN_PASSWORD || 'admin@123',
+    email: process.env.ADMIN_EMAIL,
+    password: process.env.ADMIN_PASSWORD,
     fullname: 'Blog App Admin',
   },
   jwt: {
-    secretAccess: process.env.JWT_SECRET_ACCESS || 'secret-access',
-    expiresAccessToken: process.env.JWT_EXPIRES_ACCESS_MINUTES + 'm' || '10m',
-    secretRefresh: process.env.JWT_SECRET_REFRESH || 'secret-refresh',
-    expiresRefreshToken: process.env.JWT_EXPIRES_REFRESH_MINUTES + 'm' || '1200m',
+    secretAccess: process.env.JWT_SECRET_ACCESS,
+    expiresAccessToken: process.env.JWT_EXPIRES_ACCESS_MINUTES + 'm',
+    secretRefresh: process.env.JWT_SECRET_REFRESH,
+    expiresRefreshToken: process.env.JWT_EXPIRES_REFRESH_MINUTES + 'm',
   },
   rateLimit: {
     timeApp: process.env.RATE_LIMIT_TIME_APP || 5,
