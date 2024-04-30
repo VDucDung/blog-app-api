@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/server.js",
     "format": "prettier --write src/**/*.{js,json}",
-    "clean": "rm -rf build && mkdir build",
+    "clean": "rimraf build && mkdir build",
     "build-babel": "babel ./src -d ./build/src",
     "build": "npm run clean && npm run build-babel",
     "production": "npm run build && cross-env NODE_ENV=production node ./build/src/server.js",
@@ -38,8 +38,11 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.24.5",
+    "@babel/core": "^7.24.5",
     "@babel/node": "^7.23.9",
     "nodemon": "^3.1.0",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5"
   }
 }
