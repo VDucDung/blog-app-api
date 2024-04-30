@@ -14,8 +14,8 @@ const getPostByTitle = async (title) => {
   const post = await Post.findOne({ title });
   return post;
 };
-const getPostByDesc = async (desc) => {
-  const post = await Post.findOne({ desc });
+const getPostBySlug = async (slug) => {
+  const post = await Post.findOne({ slug });
   return post;
 };
 const getPostById = async (id) => {
@@ -27,7 +27,7 @@ const getPostById = async (id) => {
 };
 
 const createPost = async (postBody) => {
-  if ((await getPostByTitle(postBody.title)) && (await getPostByDesc(postBody.desc))) {
+  if (await getPostBySlug(postBody.slug)) {
     throw new ApiError(httpStatus.BAD_REQUEST, postMessage().ALREADY_EXISTS);
   }
   const post = await Post.create(postBody);
@@ -40,7 +40,7 @@ const getPostsByKeyword = async (requestQuery) => {
   if (postsCache) return postsCache;
 
   const searchFeatures = new SearchFeature(Post);
-  const { results, ...detailResult } = await searchFeatures.getResults(requestQuery, ['title', 'userId', 'desc']);
+  const { results, ...detailResult } = await searchFeatures.getResults(requestQuery, ['title', 'userId', 'slug']);
 
   cacheService.set(key, { posts: results, ...detailResult });
   return { posts: results, ...detailResult };
@@ -62,7 +62,7 @@ const deletePostById = async (postId) => {
 module.exports = {
   getPostsByuserId,
   getPostByTitle,
-  getPostByDesc,
+  getPostBySlug,
   getPostById,
   createPost,
   getPostsByKeyword,
