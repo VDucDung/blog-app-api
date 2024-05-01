@@ -1,4 +1,3 @@
-const { USE_PROXY } = require('http-status');
 const { i18nService } = require('../config');
 
 const userMessage = () => {
