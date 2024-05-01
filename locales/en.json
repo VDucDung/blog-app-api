@@ -21,7 +21,7 @@
     "lockedSuccess": "User locked successfully",
     "unlockedSuccess": "User unlocked successfully",
     "userLocked": "Account locked",
-    "usernameLength": "User name must be more than 2 characters",
+    "usernameLength": "User name must be more than 1 characters",
     "phoneLength": "Phone number must be between 5 and 12 characters"
   },
   "auth": {

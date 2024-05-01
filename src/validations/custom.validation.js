@@ -33,7 +33,7 @@ const role = (value, helpers) => {
 
 const username = (value, helpers) => {
   if (value && value.length < 2) {
-    return helpers.message(userMessage().U);
+    return helpers.message(userMessage().USERNAME_LENGTH);
   }
   return value;
 };

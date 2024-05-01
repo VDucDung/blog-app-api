@@ -21,7 +21,7 @@
     "lockedSuccess": "Khoá người dùng thành công",
     "unlockedSuccess": "Mở khoá người dùng thành công",
     "userLocked": "Tài khoản đã bị khoá",
-    "usernameLength": "Tên đăng nhập phải nhiều hơn 2 ký tự",
+    "usernameLength": "Tên đăng nhập phải nhiều hơn 1 ký tự",
     "phoneLength": "Số điện thoại từ 8 đến 13 ký tự"
   },
   "auth": {
