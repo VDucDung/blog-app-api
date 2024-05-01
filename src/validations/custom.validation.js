@@ -8,7 +8,7 @@ const objectId = (value, helpers) => {
 };
 
 const password = (value, helpers) => {
-  if (value.length < 8) {
+  if (value.length < 6) {
     return helpers.message(userMessage().PASSWORD_LENGTH);
   }
   if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {

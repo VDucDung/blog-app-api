@@ -14,7 +14,7 @@
     "updateSuccess": "Cập nhật người dùng thành công",
     "deleteSuccess": "Xóa người dùng thành công",
     "incorrectId": "không đúng định dạng Id của MongoDB",
-    "passwordLength": "Mật khẩu lớn hơn 8 ký tự",
+    "passwordLength": "Mật khẩu phải từ 6 ký tự",
     "passwordInvalid": "Mật khẩu phải chứa 1 ký tự và 1 số",
     "emailInvalid": "Email không đúng định dạng",
     "roleInvalid": "Chức vụ này không chính xác",
