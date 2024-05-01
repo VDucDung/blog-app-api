@@ -1,3 +1,4 @@
+const { USE_PROXY } = require('http-status');
 const { i18nService } = require('../config');
 
 const userMessage = () => {
@@ -18,6 +19,7 @@ const userMessage = () => {
     UNLOCKED_SUCCESS: i18nService.translate('user', 'unlockedSuccess'),
     USER_LOCKED: i18nService.translate('user', 'userLocked'),
     PHONE_LENGTH: i18nService.translate('user', 'phoneLength'),
+    USERNAME_LENGTH: i18nService.translate('user', 'usernameLength'),
   };
 };
 

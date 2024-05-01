@@ -26,7 +26,7 @@ app.use((req, res, next) => {
   next(i18nService.setLocale(req, res));
 });
 
-if (env.nodeEnv !== 'test') {
+if (env.NODE_ENV !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }

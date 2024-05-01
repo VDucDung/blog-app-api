@@ -5,7 +5,7 @@ const getInfoClient = (req) => {
 
   let userIP = 'localhost';
 
-  if (env.nodeEnv === 'production') {
+  if (env.NODE_ENV === 'production') {
     userIP =
       req.headers['cf-connecting-ip'] ||
       (req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(', ')[0] : '') ||

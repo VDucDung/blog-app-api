@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const ApiError = require('../utils/ApiError');
+const httpStatus = require('http-status');
 
 const userSchema = new mongoose.Schema(
   {
@@ -22,7 +24,10 @@ const userSchema = new mongoose.Schema(
 );
 userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
-  return !!user;
+  if (!!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  }
+  return false;
 };
 
 userSchema.pre('save', async function (next) {

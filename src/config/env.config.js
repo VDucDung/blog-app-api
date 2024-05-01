@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const env = {
   port: process.env.PORT || 3000,
-  nodeEnv: process.env.NODE_ENV,
+  NODE_ENV: process.env.NODE_ENV,
   mongoURI: process.env.MONGO_URI,
   admin: {
     email: process.env.ADMIN_EMAIL,
