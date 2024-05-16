@@ -8,7 +8,9 @@ const { authService, userService } = require('../services');
 
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
+
   const { user, accessToken, refreshToken } = await authService.login(email, password);
+
   res
     .status(httpStatus.OK)
     .json(response(httpStatus.OK, authMessage().LOGIN_SUCCESS, { user, accessToken, refreshToken }));
@@ -16,7 +18,9 @@ const login = catchAsync(async (req, res) => {
 
 const register = catchAsync(async (req, res) => {
   const { username, email, password } = req.body;
+
   const { user, accessToken, refreshToken } = await authService.register(username, email, password);
+
   res
     .status(httpStatus.CREATED)
     .json(response(httpStatus.CREATED, authMessage().REGISTER_SUCCESS, { user, accessToken, refreshToken }));
@@ -24,24 +28,36 @@ const register = catchAsync(async (req, res) => {
 
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.body;
+
   const { accessToken } = await authService.refreshToken(refreshToken);
+
   res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().REFRESH_TOKEN_SUCCESS, { accessToken }));
 });
 
 const getMe = catchAsync(async (req, res) => {
-  res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().GET_ME_SUCCESS, req[REQUEST_USER_KEY]));
+  const user = req[REQUEST_USER_KEY];
+
+  res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().GET_ME_SUCCESS, user));
 });
 
 const updateMe = catchAsync(async (req, res) => {
   if (req.file) req.body['avatar'] = req.file.path;
-  const user = await userService.updateUserById(req[REQUEST_USER_KEY].id, req.body);
+
+  const userId = req[REQUEST_USER_KEY].id;
+
+  const user = await userService.updateUserById(userId, req.body);
+
   res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().UPDATE_ME_SUCCESS, user));
 });
 
 const changePassword = catchAsync(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-  const user = await authService.changePassword(req[REQUEST_USER_KEY].id, oldPassword, newPassword);
-  return res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().CHANGE_PASSWORD_SUCCESS, user));
+
+  const userId = req[REQUEST_USER_KEY].id;
+
+  const user = await authService.changePassword(userId, oldPassword, newPassword);
+
+  res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().CHANGE_PASSWORD_SUCCESS, user));
 });
 
 module.exports = {
