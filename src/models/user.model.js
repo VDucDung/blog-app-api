@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
     phone: { type: String, trim: true },
     dateOfBirth: { type: Date, default: '2000-01-01' },
     gender: { type: String, enum: ['male', 'female'], default: 'male' },
-    isVerify: { type: Boolean },
+    isVerify: { type: Boolean, default: false },
     verificationCode: { type: String, required: false },
     isLocked: { type: Boolean },
     role: { type: String, enum: ['admin', 'user'], default: 'user' },
