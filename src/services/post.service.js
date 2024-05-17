@@ -5,6 +5,8 @@ const ApiError = require('../utils/ApiError');
 const { postMessage } = require('../messages');
 const SearchFeature = require('../utils/SearchFeature');
 const cacheService = require('../services/cache.service');
+const generateUniqueSlug = require('../utils/generateUniqueSlug');
+const SearchService = require('../utils/SearchService');
 
 const getPostsByuserId = async (userId) => {
   const posts = await Post.find({ userId });
@@ -27,20 +29,19 @@ const getPostById = async (id) => {
 };
 
 const createPost = async (postBody) => {
-  if (await getPostBySlug(postBody.slug)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, postMessage().ALREADY_EXISTS);
-  }
+  postBody.slug = await generateUniqueSlug(postBody.title, Post);
+
   const post = await Post.create(postBody);
   return post;
 };
 
-const getPostsByKeyword = async (requestQuery) => {
+const getAllPosts = async (requestQuery) => {
   const key = JSON.stringify(requestQuery);
   const postsCache = cacheService.get(key);
   if (postsCache) return postsCache;
 
-  const searchFeatures = new SearchFeature(Post);
-  const { results, ...detailResult } = await searchFeatures.getResults(requestQuery, ['title', 'userId', 'slug']);
+  const searchService = new SearchService(Post);
+  const { results, ...detailResult } = await searchService.getResults(requestQuery, ['title', 'userId', 'slug']);
 
   cacheService.set(key, { posts: results, ...detailResult });
   return { posts: results, ...detailResult };
@@ -65,7 +66,7 @@ module.exports = {
   getPostBySlug,
   getPostById,
   createPost,
-  getPostsByKeyword,
+  getAllPosts,
   updatePostById,
   deletePostById,
 };

@@ -1,13 +1,21 @@
 const Joi = require('joi');
+
 const { objectId } = require('./custom.validation');
 
 const createPost = {
   body: Joi.object().keys({
     title: Joi.string().required(),
-    desc: Joi.string().required(),
+    caption: Joi.string().required(),
+    body: Joi.object()
+      .keys({
+        type: Joi.string(),
+        content: Joi.array(),
+      })
+      .required(),
     image: Joi.string(),
-    categories: Joi.array(),
     userId: Joi.string().custom(objectId),
+    tags: Joi.array(),
+    categories: Joi.array(),
   }),
 };
 
@@ -19,10 +27,12 @@ const getPosts = {
     page: Joi.number().integer(),
     lang: Joi.string(),
     title: Joi.string().allow(null, ''),
-    desc: Joi.string().allow(null, ''),
+    caption: Joi.string().allow(null, ''),
+    body: Joi.object().allow(null, ''),
     image: Joi.string().allow(null, ''),
-    categories: Joi.array().allow(null, ''),
     userId: Joi.string().optional().custom(objectId),
+    tags: Joi.array().allow(null, ''),
+    categories: Joi.array().allow(null, ''),
   }),
 };
 
@@ -39,10 +49,12 @@ const updatePost = {
   body: Joi.object()
     .keys({
       title: Joi.string(),
-      desc: Joi.string(),
+      caption: Joi.string(),
       image: Joi.string().allow(null, ''),
-      categories: Joi.array().allow(null, ''),
+      body: Joi.object().allow(null, ''),
       userId: Joi.string().optional().custom(objectId),
+      tags: Joi.array().allow(null, ''),
+      categories: Joi.array().allow(null, ''),
     })
     .min(1),
 };
