@@ -26,7 +26,7 @@ class SearchService {
       .populate([
         {
           path: 'userId',
-          select: ['avatar', 'name', 'verified'],
+          select: ['avatar', 'username', 'isVerify'],
         },
         {
           path: 'categories',
