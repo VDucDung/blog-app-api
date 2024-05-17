@@ -34,14 +34,19 @@ const getAllPosts = catchAsync(async (req, res) => {
   });
 
   if (currentPage > pages) {
-    return res.json([]);
+    return res.status(httpStatus.NOT_FOUND).json(response(httpStatus.NOT_FOUND, postMessage().NOT_FOUND));
   }
 
   res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().FIND_LIST_SUCCESS, posts));
 });
 
 const getPost = catchAsync(async (req, res) => {
-  const post = await postService.getPostById(req.params.postId || req.body.post.id);
+  const post = await postService.getPostBySlug(req.params.slug);
+
+  if (!post) {
+    res.status(httpStatus.NOT_FOUND).json(response(httpStatus.NOT_FOUND, postMessage().NOT_FOUND));
+  }
+
   res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().FIND_SUCCESS, post));
 });
 

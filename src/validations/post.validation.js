@@ -36,9 +36,15 @@ const getPosts = {
   }),
 };
 
+const getPostBySlug = {
+  params: Joi.object().keys({
+    slug: Joi.string(),
+  }),
+};
+
 const getPost = {
   params: Joi.object().keys({
-    postId: Joi.string().custom(objectId),
+    userId: Joi.string().custom(objectId),
   }),
 };
 
@@ -69,6 +75,7 @@ module.exports = {
   createPost,
   getPosts,
   getPost,
+  getPostBySlug,
   updatePost,
   deletePost,
 };

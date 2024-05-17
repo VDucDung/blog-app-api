@@ -17,7 +17,41 @@ const getPostByTitle = async (title) => {
   return post;
 };
 const getPostBySlug = async (slug) => {
-  const post = await Post.findOne({ slug });
+  const post = await Post.findOne({ slug }).populate([
+    {
+      path: 'userId',
+      select: ['avatar', 'username'],
+    },
+    {
+      path: 'categories',
+      select: ['name'],
+    },
+    {
+      path: 'comments',
+      match: {
+        check: true,
+        parent: null,
+      },
+      populate: [
+        {
+          path: 'userId',
+          select: ['avatar', 'username'],
+        },
+        {
+          path: 'replies',
+          match: {
+            check: true,
+          },
+          populate: [
+            {
+              path: 'userId',
+              select: ['avatar', 'username'],
+            },
+          ],
+        },
+      ],
+    },
+  ]);
   return post;
 };
 const getPostById = async (id) => {

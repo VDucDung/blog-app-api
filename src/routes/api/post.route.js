@@ -20,7 +20,7 @@ postRouter
 
 postRouter
   .route('/:slug')
-  .get(validate(postValidation.getPosts), postController.getAllPosts)
+  .get(validate(postValidation.getPostBySlug), postController.getPost)
   .put(
     auth,
     authorize('user', 'admin'),
