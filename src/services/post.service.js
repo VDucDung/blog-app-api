@@ -54,6 +54,7 @@ const getPostBySlug = async (slug) => {
   ]);
   return post;
 };
+
 const getPostById = async (id) => {
   const post = await Post.findById(id);
   if (!post) {
