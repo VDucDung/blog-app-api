@@ -13,7 +13,7 @@ const getCategoryById = async (id) => {
 };
 
 const createCategory = async (categoryBody) => {
-  const category = await category.create(categoryBody);
+  const category = await Category.create(categoryBody);
   return category;
 };
 
