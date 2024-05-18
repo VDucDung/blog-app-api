@@ -5,8 +5,8 @@ const createComment = {
   body: Joi.object().keys({
     comment: Joi.string().required(),
     slug: Joi.string().required(),
-    parent: Joi.string().custom(objectId),
-    replyOnUser: Joi.string().custom(objectId),
+    parent: Joi.string().custom(objectId).allow(null),
+    replyOnUser: Joi.string().custom(objectId).allow(null),
   }),
 };
 

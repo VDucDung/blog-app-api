@@ -27,7 +27,14 @@ const createComment = async (commentBody) => {
 
   const post = await Post.findOne({ slug });
 
-  const newComment = new Comment({ comment, postId: post._id, userId: commentBody.userId, parent, replyOnUser });
+  const newComment = new Comment({
+    comment,
+    postId: post._id,
+    userId: commentBody.userId,
+    parent: parent || null,
+    replyOnUser: replyOnUser || null,
+  });
+
   const savedComment = await newComment.save();
 
   return savedComment;
