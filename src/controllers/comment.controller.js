@@ -4,8 +4,10 @@ const response = require('../utils/response');
 const { commentService } = require('../services');
 const { commentMessage } = require('../messages');
 const catchAsync = require('../utils/catchAsync');
+const { REQUEST_USER_KEY } = require('../constants');
 
 const createComment = catchAsync(async (req, res) => {
+  req.body.userId = req[REQUEST_USER_KEY].id;
   const comment = await commentService.createComment(req.body);
   res.status(httpStatus.CREATED).json(response(httpStatus.CREATED, commentMessage().CREATE_SUCCESS, comment));
 });

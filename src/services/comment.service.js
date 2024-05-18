@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 
-const { Comment } = require('../models');
+const { Comment, Post } = require('../models');
 const ApiError = require('../utils/ApiError');
 const cacheService = require('./cache.service');
 const { commentMessage } = require('../messages');
@@ -23,8 +23,14 @@ const getCommentById = async (id) => {
 };
 
 const createComment = async (commentBody) => {
-  const comment = await Comment.create(commentBody);
-  return comment;
+  const { comment, slug, parent, replyOnUser } = commentBody;
+
+  const post = await Post.findOne({ slug });
+
+  const newComment = new Comment({ comment, postId: post._id, userId: commentBody.userId, parent, replyOnUser });
+  const savedComment = await newComment.save();
+
+  return savedComment;
 };
 
 const getCommentsByKeyword = async (requestQuery) => {

@@ -12,7 +12,8 @@ const postSchema = new mongoose.Schema(
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
   },
   {
-    timestamps: true, toJSON: { virtuals: true },
+    timestamps: true,
+    toJSON: { virtuals: true },
   },
 );
 

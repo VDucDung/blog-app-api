@@ -10,7 +10,8 @@ const commentSchema = new mongoose.Schema(
     replyOnUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   },
   {
-    timestamps: true, toJSON: { virtuals: true },
+    timestamps: true,
+    toJSON: { virtuals: true },
   },
 );
 

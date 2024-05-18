@@ -4,8 +4,9 @@ const { objectId } = require('./custom.validation');
 const createComment = {
   body: Joi.object().keys({
     comment: Joi.string().required(),
-    postId: Joi.string().custom(objectId),
-    userId: Joi.string().custom(objectId),
+    slug: Joi.string().required(),
+    parent: Joi.string().custom(objectId),
+    replyOnUser: Joi.string().custom(objectId),
   }),
 };
 
@@ -19,6 +20,9 @@ const getComments = {
     comment: Joi.string().allow(null, ''),
     postId: Joi.string().optional().custom(objectId),
     userId: Joi.string().optional().custom(objectId),
+    parent: Joi.string().optional().custom(objectId),
+    replyOnUser: Joi.string().optional().custom(objectId),
+    check: Joi.boolean().optional(),
   }),
 };
 
