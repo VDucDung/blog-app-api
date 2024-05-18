@@ -39,8 +39,6 @@ const updateComment = {
   body: Joi.object()
     .keys({
       comment: Joi.string(),
-      postId: Joi.string().optional().custom(objectId),
-      userId: Joi.string().optional().custom(objectId),
     })
     .min(1),
 };

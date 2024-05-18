@@ -53,10 +53,14 @@ const getCommentsByKeyword = async (requestQuery) => {
 };
 
 const updateCommentById = async (commentId, updateBody) => {
-  const comment = await getCommentById(commentId);
-  Object.assign(comment, updateBody);
-  await comment.save();
-  return comment;
+  const { comment, check } = updateBody;
+  const results = await getCommentById(commentId);
+
+  results.comment = comment || results.comment;
+  results.check = typeof check !== "undefined" ? check : results.check;
+
+  const updatedComment = await results.save();
+  return updatedComment;
 };
 
 const deleteCommentById = async (commentId) => {
