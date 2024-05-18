@@ -65,7 +65,10 @@ const updateCommentById = async (commentId, updateBody) => {
 
 const deleteCommentById = async (commentId) => {
   const comment = await getCommentById(commentId);
+
+  await Comment.deleteMany({ parent: comment._id });
   await comment.deleteOne();
+
   return comment;
 };
 
