@@ -20,11 +20,12 @@ const getPosts = catchAsync(async (req, res) => {
 });
 
 const getAllPosts = catchAsync(async (req, res) => {
-  const filter = req.query.keyword;
+  const filter = req.query.keyword || '';
+  const sortBy = req.query.sortBy || 'desc';
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.limit) || 10;
 
-  const { posts, total, pages } = await postService.getAllPosts(filter, page, pageSize);
+  const { posts, total, pages } = await postService.getAllPosts(filter, page, pageSize, sortBy);
 
   res.header({
     'x-filter': filter,

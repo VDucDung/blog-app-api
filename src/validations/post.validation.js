@@ -21,8 +21,8 @@ const createPost = {
 
 const getPosts = {
   query: Joi.object().keys({
-    keyword: Joi.string(),
-    sortBy: Joi.string(),
+    keyword: Joi.string().allow(null, ''),
+    sortBy: Joi.string().allow(null, ''),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
     lang: Joi.string(),

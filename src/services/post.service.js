@@ -69,7 +69,7 @@ const createPost = async (postBody) => {
   return post;
 };
 
-const getAllPosts = async (filter, page, pageSize) => {
+const getAllPosts = async (filter, page, pageSize, sortBy) => {
   const key = JSON.stringify(page);
   const commentsCache = cacheService.get(key);
   if (commentsCache) return commentsCache;
@@ -100,7 +100,7 @@ const getAllPosts = async (filter, page, pageSize) => {
         select: ['name'],
       },
     ])
-    .sort({ updatedAt: 'desc' });
+    .sort({ createdAt: sortBy });
 
   cacheService.set(key, { posts: posts, total, page, pageSize, pages });
   return { posts, total, page, pageSize, pages };
