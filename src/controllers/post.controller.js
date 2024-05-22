@@ -20,20 +20,21 @@ const getPosts = catchAsync(async (req, res) => {
 });
 
 const getAllPosts = catchAsync(async (req, res) => {
-  const { searchKeyword, page, limit } = req.query;
-  const requestQuery = { searchKeyword, page, limit };
+  const filter = req.query.keyword;
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.limit) || 10;
 
-  const { posts, total, pages, pageSize, currentPage } = await postService.getAllPosts(requestQuery);
+  const { posts, total, pages } = await postService.getAllPosts(filter, page, pageSize);
 
   res.header({
-    'x-filter': searchKeyword,
+    'x-filter': filter,
     'x-totalcount': JSON.stringify(total),
-    'x-currentpage': JSON.stringify(currentPage),
+    'x-currentpage': JSON.stringify(page),
     'x-pagesize': JSON.stringify(pageSize),
     'x-totalpagecount': JSON.stringify(pages),
   });
 
-  if (currentPage > pages) {
+  if (page > pages) {
     return res.status(httpStatus.NOT_FOUND).json(response(httpStatus.NOT_FOUND, postMessage().NOT_FOUND));
   }
 

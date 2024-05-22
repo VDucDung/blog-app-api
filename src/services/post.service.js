@@ -6,7 +6,6 @@ const { postMessage } = require('../messages');
 const SearchFeature = require('../utils/SearchFeature');
 const cacheService = require('../services/cache.service');
 const generateUniqueSlug = require('../utils/generateUniqueSlug');
-const SearchService = require('../utils/SearchService');
 
 const getPostsByuserId = async (userId) => {
   const posts = await Post.find({ userId });
@@ -70,16 +69,41 @@ const createPost = async (postBody) => {
   return post;
 };
 
-const getAllPosts = async (requestQuery) => {
-  const key = JSON.stringify(requestQuery);
-  const postsCache = cacheService.get(key);
-  if (postsCache) return postsCache;
+const getAllPosts = async (filter, page, pageSize) => {
+  const key = JSON.stringify(page);
+  const commentsCache = cacheService.get(key);
+  if (commentsCache) return commentsCache;
 
-  const searchService = new SearchService(Post);
-  const { results, ...detailResult } = await searchService.getResults(requestQuery, ['title', 'userId', 'slug']);
+  let where = {};
+  if (filter) {
+    where.$or = [
+      { title: { $regex: filter, $options: 'i' } },
+      { slug: { $regex: filter, $options: 'i' } },
+      { tags: { $regex: filter, $options: 'i' } },
+    ];
+  }
 
-  cacheService.set(key, { posts: results, ...detailResult });
-  return { posts: results, ...detailResult };
+  const skip = (page - 1) * pageSize;
+  const total = await Post.find(where).countDocuments();
+  const pages = Math.ceil(total / pageSize);
+
+  const posts = await Post.find(where)
+    .skip(skip)
+    .limit(pageSize)
+    .populate([
+      {
+        path: 'userId',
+        select: ['avatar', 'username', 'isVerify'],
+      },
+      {
+        path: 'categories',
+        select: ['name'],
+      },
+    ])
+    .sort({ updatedAt: 'desc' });
+
+  cacheService.set(key, { posts: posts, total, page, pageSize, pages });
+  return { posts, total, page, pageSize, pages };
 };
 
 const updatePostById = async (postId, updateBody) => {
