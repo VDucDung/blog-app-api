@@ -57,7 +57,7 @@ const updateCommentById = async (commentId, updateBody) => {
   const results = await getCommentById(commentId);
 
   results.comment = comment || results.comment;
-  results.check = typeof check !== "undefined" ? check : results.check;
+  results.check = typeof check !== 'undefined' ? check : results.check;
 
   const updatedComment = await results.save();
   return updatedComment;

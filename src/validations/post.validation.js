@@ -23,6 +23,7 @@ const getPosts = {
   query: Joi.object().keys({
     keyword: Joi.string(),
     sortBy: Joi.string(),
+    searchKeyword: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
     lang: Joi.string(),
