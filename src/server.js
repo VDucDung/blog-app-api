@@ -12,6 +12,10 @@ const baseRouter = require('./routes/base.route');
 
 const app = express();
 
+const corsOptions = {
+  exposedHeaders: 'authorization',
+};
+
 app.set('trust proxy', 1);
 
 app.use(rateLimitApp);
@@ -19,7 +23,7 @@ app.use(helmet());
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(corsOptions));
 app.options('*', cors());
 
 app.use((req, res, next) => {
