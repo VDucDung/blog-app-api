@@ -28,6 +28,7 @@ const getAllPosts = catchAsync(async (req, res) => {
   const { posts, total, pages } = await postService.getAllPosts(filter, page, pageSize, sortBy);
 
   res.header({
+    'Access-Control-Expose-Headers': 'x-filter, x-totalcount, x-currentpage, x-pagesize, x-totalpagecount',
     'x-filter': filter,
     'x-totalcount': JSON.stringify(total),
     'x-currentpage': JSON.stringify(page),
