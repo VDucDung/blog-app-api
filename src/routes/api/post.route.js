@@ -31,7 +31,7 @@ postRouter
   .delete(auth, authorize('user', 'admin'), validate(postValidation.deletePost), postController.deletePost);
 
 postRouter
-  .route('/:postId')
+  .route('/post/:postId')
   .get(auth, authorize('admin'), validate(postValidation.getPost), postController.getPost)
   .put(
     auth,
