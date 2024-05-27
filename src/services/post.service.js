@@ -70,7 +70,8 @@ const createPost = async (postBody) => {
 };
 
 const getAllPosts = async (filter, page, pageSize, sortBy) => {
-  const commentsCache = cacheService.get(`${filter}:${page}:${pageSize}:post`);
+  let randomIntegerInRange = Math.floor(Math.random() * (pageSize - page + 1)) + page;
+  const commentsCache = cacheService.get(`${filter}:${randomIntegerInRange}:post`);
   if (commentsCache) return commentsCache;
 
   let where = {};
@@ -101,7 +102,7 @@ const getAllPosts = async (filter, page, pageSize, sortBy) => {
     ])
     .sort({ createdAt: sortBy });
 
-  cacheService.set(`${filter}:${page}:${pageSize}:post`, { posts, total, page, pageSize, pages });
+  cacheService.set(`${filter}:${randomIntegerInRange}:post`, { posts, total, page, pageSize, pages });
 
   return { posts, total, page, pageSize, pages };
 };
