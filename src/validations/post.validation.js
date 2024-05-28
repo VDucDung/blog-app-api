@@ -52,17 +52,15 @@ const updatePost = {
   params: Joi.object().keys({
     postId: Joi.string().custom(objectId),
   }),
-  body: Joi.object()
-    .keys({
-      title: Joi.string(),
-      caption: Joi.string(),
-      image: Joi.string().allow(null, ''),
-      body: Joi.object().allow(null, ''),
-      userId: Joi.string().optional().custom(objectId),
-      tags: Joi.array().allow(null, ''),
-      categories: Joi.array().allow(null, ''),
-    })
-    .min(1),
+  body: Joi.object().keys({
+    title: Joi.string(),
+    caption: Joi.string(),
+    image: Joi.string().allow(null, ''),
+    body: Joi.object().allow(null, ''),
+    userId: Joi.string().optional().custom(objectId),
+    tags: Joi.array().allow(null, ''),
+    categories: Joi.array().allow(null, ''),
+  }),
 };
 
 const deletePost = {
