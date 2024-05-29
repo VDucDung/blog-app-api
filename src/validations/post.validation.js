@@ -56,7 +56,7 @@ const updatePost = {
     title: Joi.string(),
     caption: Joi.string(),
     image: Joi.string().allow(null, ''),
-    body: Joi.object().allow(null, ''),
+    body: Joi.string().allow(null, ''),
     userId: Joi.string().optional().custom(objectId),
     tags: Joi.array().allow(null, ''),
     categories: Joi.array().allow(null, ''),

@@ -55,7 +55,7 @@ const getPost = catchAsync(async (req, res) => {
 
 const updatePost = catchAsync(async (req, res) => {
   if (req.file) req.body['image'] = req.file.path;
-
+  if (req.body.body) req.body['body'] = JSON.parse(req.body.body);
   const post = await postService.updatePostById(req.params.postId, req.body);
   res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().UPDATE_SUCCESS, post));
 });
