@@ -6,16 +6,11 @@ const createPost = {
   body: Joi.object().keys({
     title: Joi.string().required(),
     caption: Joi.string().required(),
-    body: Joi.object()
-      .keys({
-        type: Joi.string(),
-        content: Joi.array(),
-      })
-      .required(),
+    body: Joi.string().required(),
     image: Joi.string(),
     userId: Joi.string().custom(objectId),
-    tags: Joi.array(),
-    categories: Joi.array(),
+    tags: Joi.string(),
+    categories: Joi.string(),
   }),
 };
 

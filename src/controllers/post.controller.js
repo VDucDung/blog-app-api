@@ -9,8 +9,12 @@ const { REQUEST_USER_KEY } = require('../constants');
 const createPost = catchAsync(async (req, res) => {
   req.body.userId = req[REQUEST_USER_KEY].id;
   if (req.file) req.body['image'] = req.file.path;
+  if (req.body.body) req.body['body'] = JSON.parse(req.body.body);
+  if (req.body.tags) req.body['tags'] = JSON.parse(req.body.tags);
+  if (req.body.categories) req.body['categories'] = JSON.parse(req.body.categories);
 
   const post = await postService.createPost(req.body);
+
   res.status(httpStatus.CREATED).json(response(httpStatus.CREATED, postMessage().CREATE_SUCCESS, post));
 });
 
