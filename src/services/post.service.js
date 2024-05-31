@@ -109,6 +109,7 @@ const getAllPosts = async (filter, page, pageSize, sortBy) => {
 
 const updatePostById = async (postId, updateBody) => {
   const post = await getPostById(postId);
+  post.slug = await generateUniqueSlug(updateBody.title, Post);
   Object.assign(post, updateBody);
   await post.save();
   return post;

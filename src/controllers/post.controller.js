@@ -62,7 +62,6 @@ const updatePost = catchAsync(async (req, res) => {
   if (req.body.body) req.body['body'] = JSON.parse(req.body.body);
   if (req.body.tags) req.body['tags'] = JSON.parse(req.body.tags);
   if (req.body.categories) req.body['categories'] = JSON.parse(req.body.categories);
-
   const post = await postService.updatePostById(req.params.postId, req.body);
 
   res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().UPDATE_SUCCESS, post));
