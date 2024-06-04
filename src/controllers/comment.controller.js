@@ -17,6 +17,30 @@ const getComments = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).json(response(httpStatus.OK, commentMessage().FIND_LIST_SUCCESS, comments));
 });
 
+const getAllComments = catchAsync(async (req, res) => {
+  const filter = req.query.keyword || '';
+  const sortBy = req.query.sortBy || 'desc';
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.limit) || 10;
+
+  const { comments, total, pages } = await commentService.getAllComments(filter, page, pageSize, sortBy);
+
+  res.header({
+    'Access-Control-Expose-Headers': 'x-filter, x-totalcount, x-currentpage, x-pagesize, x-totalpagecount',
+    'x-filter': filter,
+    'x-totalcount': JSON.stringify(total),
+    'x-currentpage': JSON.stringify(page),
+    'x-pagesize': JSON.stringify(pageSize),
+    'x-totalpagecount': JSON.stringify(pages),
+  });
+
+  if (page > pages) {
+    return res.status(httpStatus.NOT_FOUND).json(response(httpStatus.NOT_FOUND, commentMessage().NOT_FOUND));
+  }
+
+  res.status(httpStatus.OK).json(response(httpStatus.OK, commentMessage().FIND_LIST_SUCCESS, comments));
+});
+
 const getComment = catchAsync(async (req, res) => {
   const comment = await commentService.getCommentById(req.params.commentId || req.body.comment.id);
   res.status(httpStatus.OK).json(response(httpStatus.OK, commentMessage().FIND_SUCCESS, comment));
@@ -38,4 +62,5 @@ module.exports = {
   getComment,
   updateComment,
   deleteComment,
+  getAllComments,
 };

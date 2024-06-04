@@ -12,10 +12,10 @@ const createComment = {
 
 const getComments = {
   query: Joi.object().keys({
-    keyword: Joi.string(),
-    sortBy: Joi.string(),
-    limit: Joi.number().integer(),
-    page: Joi.number().integer(),
+    keyword: Joi.string().allow(null, ''),
+    sortBy: Joi.string().allow(null, ''),
+    limit: Joi.number().integer().allow(null, ''),
+    page: Joi.number().integer().allow(null, ''),
     lang: Joi.string(),
     comment: Joi.string().allow(null, ''),
     postId: Joi.string().optional().custom(objectId),

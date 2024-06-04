@@ -8,7 +8,7 @@ const commentRouter = express.Router();
 
 commentRouter
   .route('/')
-  .get(validate(commentValidation.getComments), commentController.getComments)
+  .get(validate(commentValidation.getComments), commentController.getAllComments)
   .post(auth, validate(commentValidation.createComment), commentController.createComment);
 
 commentRouter

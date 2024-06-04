@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const mongoose = require('mongoose');
 
 const { Comment, Post } = require('../models');
 const ApiError = require('../utils/ApiError');
@@ -52,6 +53,58 @@ const getCommentsByKeyword = async (requestQuery) => {
   return { comments: results, ...detailResult };
 };
 
+const getAllComments = async (filter, page, pageSize, sortBy) => {
+  const commentsCache = cacheService.get(`${filter}:${page}:${pageSize}:${sortBy}:comments`);
+  if (commentsCache) return commentsCache;
+
+  let where = {};
+  if (filter) {
+    where.$or = [
+      { comment: { $regex: filter, $options: 'i' } },
+      // Kiểm tra postId và userId như ObjectId
+      { postId: mongoose.Types.ObjectId.isValid(filter) ? mongoose.Types.ObjectId(filter) : null },
+      { userId: mongoose.Types.ObjectId.isValid(filter) ? mongoose.Types.ObjectId(filter) : null },
+    ].filter(Boolean); // Loại bỏ các điều kiện null
+  }
+
+  const skip = (page - 1) * pageSize;
+  const total = await Comment.find(where).countDocuments();
+  const pages = Math.ceil(total / pageSize);
+
+  const comments = await Comment.find(where)
+    .skip(skip)
+    .limit(pageSize)
+    .populate([
+      {
+        path: 'userId',
+        select: ['avatar', 'username', 'isVerify'],
+      },
+      {
+        path: 'parent',
+        populate: [
+          {
+            path: 'userId',
+            select: ['avatar', 'username'],
+          },
+        ],
+      },
+      {
+        path: 'replyOnUser',
+        select: ['avatar', 'username'],
+      },
+      {
+        path: 'postId',
+        select: ['slug', 'title'],
+      },
+    ])
+    .sort({ updatedAt: sortBy });
+
+  console.log(comments);
+  cacheService.set(`${filter}:${page}:${pageSize}:${sortBy}:comments`, { comments, total, page, pageSize, pages });
+
+  return { comments, total, page, pageSize, pages };
+};
+
 const updateCommentById = async (commentId, updateBody) => {
   const { comment, check } = updateBody;
   const results = await getCommentById(commentId);
@@ -80,4 +133,5 @@ module.exports = {
   getCommentsByKeyword,
   updateCommentById,
   deleteCommentById,
+  getAllComments,
 };
