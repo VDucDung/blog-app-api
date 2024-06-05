@@ -28,8 +28,9 @@ const getAllPosts = catchAsync(async (req, res) => {
   const sortBy = req.query.sortBy || 'desc';
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.limit) || 10;
+  const checkCache = req.query.checkCache;
 
-  const { posts, total, pages } = await postService.getAllPosts(filter, page, pageSize, sortBy);
+  const { posts, total, pages } = await postService.getAllPosts(filter, page, pageSize, sortBy, checkCache);
 
   res.header({
     'Access-Control-Expose-Headers': 'x-filter, x-totalcount, x-currentpage, x-pagesize, x-totalpagecount',

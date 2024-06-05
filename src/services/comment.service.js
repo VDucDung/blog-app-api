@@ -53,18 +53,17 @@ const getCommentsByKeyword = async (requestQuery) => {
   return { comments: results, ...detailResult };
 };
 
-const getAllComments = async (filter, page, pageSize, sortBy) => {
-  const commentsCache = cacheService.get(`${filter}:${page}:${pageSize}:${sortBy}:comments`);
+const getAllComments = async (filter, page, pageSize, sortBy, checkCache) => {
+  const commentsCache = cacheService.get(`${filter}:${checkCache}:comments`);
   if (commentsCache) return commentsCache;
 
   let where = {};
   if (filter) {
     where.$or = [
       { comment: { $regex: filter, $options: 'i' } },
-      // Kiểm tra postId và userId như ObjectId
       { postId: mongoose.Types.ObjectId.isValid(filter) ? mongoose.Types.ObjectId(filter) : null },
       { userId: mongoose.Types.ObjectId.isValid(filter) ? mongoose.Types.ObjectId(filter) : null },
-    ].filter(Boolean); // Loại bỏ các điều kiện null
+    ].filter(Boolean);
   }
 
   const skip = (page - 1) * pageSize;
@@ -100,7 +99,7 @@ const getAllComments = async (filter, page, pageSize, sortBy) => {
     .sort({ updatedAt: sortBy });
 
   console.log(comments);
-  cacheService.set(`${filter}:${page}:${pageSize}:${sortBy}:comments`, { comments, total, page, pageSize, pages });
+  cacheService.set(`${filter}:${checkCache}:comments`, { comments, total, page, pageSize, pages });
 
   return { comments, total, page, pageSize, pages };
 };

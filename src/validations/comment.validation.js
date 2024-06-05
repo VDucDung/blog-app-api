@@ -23,6 +23,7 @@ const getComments = {
     parent: Joi.string().optional().custom(objectId),
     replyOnUser: Joi.string().optional().custom(objectId),
     check: Joi.boolean().optional(),
+    checkCache: Joi.boolean().optional(),
   }),
 };
 
