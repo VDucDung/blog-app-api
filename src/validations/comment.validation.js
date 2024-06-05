@@ -39,6 +39,7 @@ const updateComment = {
   body: Joi.object()
     .keys({
       comment: Joi.string(),
+      check: Joi.boolean(),
     })
     .min(1),
 };
