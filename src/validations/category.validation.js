@@ -9,11 +9,11 @@ const createCategory = {
 
 const getCategories = {
   query: Joi.object().keys({
-    keyword: Joi.string(),
-    sortBy: Joi.string(),
+    keyword: Joi.string().allow(null, ''),
+    sortBy: Joi.string().optional(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
-    lang: Joi.string(),
+    lang: Joi.string().optional(),
     name: Joi.string().allow(null, ''),
   }),
 };
