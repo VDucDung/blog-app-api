@@ -98,7 +98,6 @@ const getAllComments = async (filter, page, pageSize, sortBy, checkCache) => {
     ])
     .sort({ updatedAt: sortBy });
 
-  console.log(comments);
   cacheService.set(`${filter}:${checkCache}:comments`, { comments, total, page, pageSize, pages });
 
   return { comments, total, page, pageSize, pages };
