@@ -28,7 +28,7 @@ const getPosts = {
     userId: Joi.string().optional().custom(objectId),
     tags: Joi.array().allow(null, ''),
     categories: Joi.array().allow(null, ''),
-    checkCache: Joi.string().optional(),
+    // checkCache: Joi.string().optional(),
   }),
 };
 

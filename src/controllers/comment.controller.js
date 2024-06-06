@@ -22,9 +22,9 @@ const getAllComments = catchAsync(async (req, res) => {
   const sortBy = req.query.sortBy || 'desc';
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.limit) || 10;
-  const checkCache = req.query.checkCache;
+  // const checkCache = req.query.checkCache;
 
-  const { comments, total, pages } = await commentService.getAllComments(filter, page, pageSize, sortBy, checkCache);
+  const { comments, total, pages } = await commentService.getAllComments(filter, page, pageSize, sortBy);
 
   res.header({
     'Access-Control-Expose-Headers': 'x-filter, x-totalcount, x-currentpage, x-pagesize, x-totalpagecount',
