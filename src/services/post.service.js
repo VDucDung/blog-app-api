@@ -70,7 +70,7 @@ const createPost = async (postBody) => {
 };
 
 const getAllPosts = async (filter, page, pageSize, sortBy, checkCache) => {
-  const key = `${filter}:${checkCache}:posts`;
+  const key = `${filter}:${page}:${pageSize}:${sortBy}:${checkCache}:posts`;
   const postsCache = cacheService.get(key);
   if (postsCache) return postsCache;
 

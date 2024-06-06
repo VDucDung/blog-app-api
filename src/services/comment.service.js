@@ -54,7 +54,7 @@ const getCommentsByKeyword = async (requestQuery) => {
 };
 
 const getAllComments = async (filter, page, pageSize, sortBy, checkCache) => {
-  const key = `${filter}:${checkCache}:comments`;
+  const key = `${filter}:${page}:${pageSize}:${sortBy}:${checkCache}:comments`;
   const commentsCache = cacheService.get(key);
   if (commentsCache) return commentsCache;
 
@@ -66,6 +66,9 @@ const getAllComments = async (filter, page, pageSize, sortBy, checkCache) => {
       { userId: mongoose.Types.ObjectId.isValid(filter) ? mongoose.Types.ObjectId(filter) : null },
     ].filter(Boolean);
   }
+
+  // Đảm bảo rằng page là số nguyên dương
+  page = Math.max(1, page);
 
   const skip = (page - 1) * pageSize;
   const total = await Comment.find(where).countDocuments();
