@@ -69,9 +69,10 @@ const createPost = async (postBody) => {
   return post;
 };
 
-const getAllPosts = async (filter, page, pageSize, sortBy) => {
-  // const postsCache = cacheService.get(`${filter}:${checkCache}:post`);
-  // if (postsCache) return postsCache;
+const getAllPosts = async (filter, page, pageSize, sortBy, checkCache) => {
+  const key = `${filter}:${checkCache}:posts`;
+  const postsCache = cacheService.get(key);
+  if (postsCache) return postsCache;
 
   let where = {};
   if (filter) {
@@ -97,7 +98,7 @@ const getAllPosts = async (filter, page, pageSize, sortBy) => {
     ])
     .sort({ createdAt: sortBy });
 
-  // cacheService.set(`${filter}:${checkCache}:post`, { posts, total, page, pageSize, pages });
+  cacheService.set(key, { posts, total, page, pageSize, pages });
 
   return { posts, total, page, pageSize, pages };
 };

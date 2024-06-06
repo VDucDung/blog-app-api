@@ -53,10 +53,10 @@ const getCommentsByKeyword = async (requestQuery) => {
   return { comments: results, ...detailResult };
 };
 
-const getAllComments = async (filter, page, pageSize, sortBy) => {
-  // const key = `${filter}:${checkCache}:comments`;
-  // const commentsCache = cacheService.get(key);
-  // if (commentsCache) return commentsCache;
+const getAllComments = async (filter, page, pageSize, sortBy, checkCache) => {
+  const key = `${filter}:${checkCache}:comments`;
+  const commentsCache = cacheService.get(key);
+  if (commentsCache) return commentsCache;
 
   let where = {};
   if (filter) {
@@ -99,7 +99,7 @@ const getAllComments = async (filter, page, pageSize, sortBy) => {
     ])
     .sort({ updatedAt: sortBy });
 
-  // cacheService.set(key, { comments, total, page, pageSize, pages });
+  cacheService.set(key, { comments, total, page, pageSize, pages });
 
   return { comments, total, page, pageSize, pages };
 };
