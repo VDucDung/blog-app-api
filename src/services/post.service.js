@@ -76,7 +76,9 @@ const getAllPosts = async (filter, page, pageSize, sortBy, checkCache) => {
 
   let where = {};
   if (filter) {
-    where.desc = { $regex: filter, $options: 'i' };
+    where.$or = [{ title: { $regex: filter, $options: 'i' } }, { caption: { $regex: filter, $options: 'i' } }].filter(
+      Boolean,
+    );
   }
 
   const skip = (page - 1) * pageSize;
