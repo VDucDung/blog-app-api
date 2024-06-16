@@ -3,7 +3,7 @@ const httpStatus = require('http-status');
 const response = require('../utils/response');
 const { authMessage } = require('../messages');
 const catchAsync = require('../utils/catchAsync');
-const { REQUEST_USER_KEY } = require('../constants');
+const { REQUEST_USER_KEY, URL_HOST } = require('../constants');
 const { authService, userService } = require('../services');
 
 const login = catchAsync(async (req, res) => {
@@ -19,11 +19,9 @@ const login = catchAsync(async (req, res) => {
 const register = catchAsync(async (req, res) => {
   const { username, email, password } = req.body;
 
-  const { user, accessToken, refreshToken } = await authService.register(username, email, password);
+  await authService.register(username, email, password);
 
-  res
-    .status(httpStatus.CREATED)
-    .json(response(httpStatus.CREATED, authMessage().REGISTER_SUCCESS, { user, accessToken, refreshToken }));
+  res.status(httpStatus.CREATED).json(response(httpStatus.CREATED, authMessage().REGISTER_SUCCESS));
 });
 
 const refreshToken = catchAsync(async (req, res) => {
@@ -60,6 +58,41 @@ const changePassword = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().CHANGE_PASSWORD_SUCCESS, user));
 });
 
+const verifyEmail = catchAsync(async (req, res) => {
+  const { token } = req.query;
+
+  const originalToken = token.replaceAll(' ', '+');
+
+  await authService.verifyEmail(originalToken);
+
+  res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().VERIFY_EMAIL_SUCCESS));
+});
+
+const renderPageVerifyEmail = catchAsync(async (req, res) => {
+  const { token } = req.query;
+
+  let payload, isExpired;
+
+  try {
+    const originalToken = token.replaceAll(' ', '+');
+    ({ payload, isExpired } = cryptoService.expiresCheck(originalToken, env.secret.tokenVerify));
+  } catch {
+    return res.redirect(`${URL_HOST.production}/not-found`);
+  }
+
+  const user = await userService.getUserByEmail(payload.email);
+
+  if (user?.isVerify) {
+    return res.redirect(`${URL_HOST.production}/auth/login`);
+  }
+
+  if (isExpired) {
+    return res.render('pages/resend-verify-email');
+  }
+
+  res.render('pages/verify-email');
+});
+
 module.exports = {
   getMe,
   login,
@@ -67,4 +100,6 @@ module.exports = {
   refreshToken,
   updateMe,
   changePassword,
+  verifyEmail,
+  renderPageVerifyEmail,
 };

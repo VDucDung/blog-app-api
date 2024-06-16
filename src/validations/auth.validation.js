@@ -41,10 +41,17 @@ const updateMe = {
   }),
 };
 
+const verifyEmail = {
+  query: Joi.object().keys({
+    token: Joi.string().required().max(255),
+  }),
+};
+
 module.exports = {
   login,
   register,
   refreshToken,
   changePassword,
   updateMe,
+  verifyEmail,
 };

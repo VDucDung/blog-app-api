@@ -16,6 +16,10 @@ authRouter
 
 authRouter.use(rateLimitAuth);
 
+authRouter.get('/verify', authController.renderPageVerifyEmail);
+
+authRouter.post('/verify', validate(authValidation.verifyEmail), authController.verifyEmail);
+
 authRouter.route('/login').post(validate(authValidation.login), authController.login);
 
 authRouter.route('/register').post(validate(authValidation.register), authController.register);

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify your email</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 62.5%;
+        font-family: 'Inter', sans-serif;
+        color: #1c1c1c;
+      }
+
+      .main {
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+        background: #fff;
+      }
+
+      .form {
+        margin: 24px;
+        padding: 32px 24px;
+        width: 450px;
+        min-height: 100px;
+        text-align: center;
+        align-self: center;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+      }
+
+      .form .heading {
+        font-size: 2.5rem;
+        font-weight: 600;
+        line-height: 1.5;
+      }
+
+      .form .desc {
+        margin-top: 8px;
+        font-size: 1.5rem;
+        font-weight: 500;
+        line-height: 2.4rem;
+        text-align: center;
+        color: #9e9da8;
+      }
+
+      .form-submit {
+        margin-top: 20px;
+        padding: 13px 20px;
+        width: 100%;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: #fff;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        background-color: #1565d8;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .form-submit:hover {
+        opacity: 0.9;
+      }
+
+      .form-login {
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: inherit;
+        font-size: 1.6rem;
+      }
+
+      .form-link {
+        padding: 4px;
+        font-size: 1.6rem;
+        font-weight: 500;
+        line-height: 1.5;
+        text-decoration: none;
+        color: #1565d8;
+      }
+
+      @media (max-width: 768px) {
+        .form {
+          padding: 20px 15px;
+        }
+
+        .form .heading {
+          font-size: 2rem;
+        }
+
+        .form .desc {
+          padding: 0 4px;
+        }
+      }
+
+      .toast-message {
+        font-size: 1.5rem !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="main">
+      <form action="" class="form" id="form-verify">
+        <h3 class="heading">Xác nhận đăng ký tài khoản</h3>
+        <p class="desc">
+          Chào mừng bạn đã đăng ký tài khoản! Vui lòng nhấn nút "Xác thực" để hoàn tất quá trình đăng ký.
+        </p>
+        <button class="form-submit">Xác thực</button>
+        <p class="form-login">
+          Bạn đã có tài khoản
+          <a href="https://blog-app-client-sooty.vercel.app/auth/login" target="_blank" class="form-link">Đăng nhập</a>
+        </p>
+      </form>
+    </div>
+  </body>
+  <script>
+    function getTokenFromURL() {
+      var url = window.location.href;
+      var queryString = url.split('?')[1];
+
+      if (queryString) {
+        var params = getParams(queryString);
+        return params['token'] || '';
+      }
+
+      return '';
+    }
+
+    function getParams(queryString) {
+      var params = {};
+      var keyValuePairs = queryString.split('&');
+
+      keyValuePairs.forEach(function (pair) {
+        var keyValue = pair.split('=');
+        params[keyValue[0]] = decodeURIComponent(keyValue[1] || '');
+      });
+
+      return params;
+    }
+
+    const formVerify = document.getElementById('form-verify');
+    const token = getTokenFromURL();
+
+    formVerify.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      try {
+        if (!token) {
+          toastr.warning('Token không hợp lệ');
+          return;
+        }
+        const response = await fetch(`/api/v1/auth/verify?token=${token}`, {
+          method: 'POST',
+        });
+        const data = await response.json();
+        if (data.code === 200) {
+          toastr.success('Xác nhận thành công, quay sang trang chủ sau 3s');
+          setTimeout(() => {
+            window.location.href = 'https://blog-app-client-sooty.vercel.app/auth/login';
+          }, 3000);
+        } else {
+          toastr.error(data.message);
+        }
+      } catch (error) {
+        toastr.error('Đã sảy ra lỗi, vui lòng thử lại');
+      }
+    });
+  </script>
+</html>
