@@ -1,11 +1,12 @@
 const express = require('express');
 
+const { env } = require('../../config');
 const { uploadService } = require('../../services');
 const { authController } = require('../../controllers');
 const { authValidation } = require('../../validations');
 const { auth } = require('../../middlewares/auth.middleware');
 const validate = require('../../middlewares/validate.middleware');
-const { rateLimitAuth } = require('../../middlewares/rate-limit.middleware');
+const limiter = require('../../middlewares/rate-limit.middleware');
 
 const authRouter = express.Router();
 
@@ -20,7 +21,7 @@ authRouter.post('/verify', validate(authValidation.verifyEmail), authController.
 
 authRouter.post('/resend-email-verify', validate(authValidation.verifyEmail), authController.reSendEmailVerify);
 
-authRouter.use(rateLimitAuth);
+authRouter.use(limiter(env.rateLimit.timeAuth, env.rateLimit.totalAuth));
 
 authRouter.route('/login').post(validate(authValidation.login), authController.login);
 

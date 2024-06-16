@@ -1,13 +1,18 @@
 const httpStatus = require('http-status');
 const rateLimit = require('express-rate-limit');
 
-const { env } = require('../config');
 const { systemMessage } = require('../messages');
 
-const createRateLimit = (windowMs, limit) =>
+/**
+ * Middleware function to apply rate limiting.
+ * @param {number} [timeLimit=3] - Time limit in minutes.
+ * @param {number} [numberRequest=100] - Number of requests allowed within time limit.
+ * @returns {Function} - Express middleware function.
+ */
+const limiter = (timeLimit = 3, numberRequest = 100) =>
   rateLimit({
-    windowMs: windowMs * 60 * 1000,
-    limit: limit,
+    windowMs: timeLimit * 60 * 1000,
+    limit: numberRequest,
     legacyHeaders: false,
     standardHeaders: true,
     message: {
@@ -16,10 +21,4 @@ const createRateLimit = (windowMs, limit) =>
     },
   });
 
-const rateLimitApp = createRateLimit(env.rateLimit.timeApp, env.rateLimit.totalApp);
-const rateLimitAuth = createRateLimit(env.rateLimit.timeAuth, env.rateLimit.totalAuth);
-
-module.exports = {
-  rateLimitApp,
-  rateLimitAuth,
-};
+module.exports = limiter;

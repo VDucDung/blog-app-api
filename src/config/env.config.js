@@ -21,10 +21,10 @@ const env = {
     tokenVerifyOTP: process.env.SECRET_TOKEN_VERIFY_OTP || 'secret-verify-otp',
   },
   rateLimit: {
-    timeApp: process.env.RATE_LIMIT_TIME_APP || 5,
-    totalApp: process.env.RATE_LIMIT_TOTAL_APP || 100,
-    timeAuth: process.env.RATE_LIMIT_TIME_AUTH || 3,
-    totalAuth: process.env.RATE_LIMIT_TOTAL_AUTH || 15,
+    timeApp: +process.env.RATE_LIMIT_TIME_APP || 5,
+    totalApp: +process.env.RATE_LIMIT_TOTAL_APP || 100,
+    timeAuth: +process.env.RATE_LIMIT_TIME_AUTH || 3,
+    totalAuth: +process.env.RATE_LIMIT_TOTAL_AUTH || 15,
   },
   cloudinary: {
     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
