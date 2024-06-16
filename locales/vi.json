@@ -36,7 +36,8 @@
     "getMeSuccess": "Thông tin cá nhân của bạn",
     "invalidPassword": "Mật khẩu không chính xác",
     "changePasswordSuccess": "Đổi mật khẩu thành công",
-    "updateMeSuccess": "Cập nhật thông tin cá nhân thành công"
+    "updateMeSuccess": "Cập nhật thông tin cá nhân thành công",
+    "pleaseVerifyEmail": "Vui lý đăng ký email"
   },
   "post": {
     "notFound": "Không tìm thấy bài viết",

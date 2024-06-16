@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const env = {
   port: process.env.PORT || 3000,
-  NODE_ENV: process.env.NODE_ENV,
+  NODE_ENV: process.env.NODE_ENV || 'development',
   mongoURI: process.env.MONGO_URI,
   admin: {
     email: process.env.ADMIN_EMAIL,
@@ -14,6 +14,11 @@ const env = {
     expiresAccessToken: process.env.JWT_EXPIRES_ACCESS_MINUTES + 'm',
     secretRefresh: process.env.JWT_SECRET_REFRESH,
     expiresRefreshToken: process.env.JWT_EXPIRES_REFRESH_MINUTES + 'm',
+  },
+  secret: {
+    tokenVerify: process.env.SECRET_TOKEN_VERIFY || 'secret-verify',
+    tokenForgot: process.env.SECRET_TOKEN_FORGOT || 'secret-forgot',
+    tokenVerifyOTP: process.env.SECRET_TOKEN_VERIFY_OTP || 'secret-verify-otp',
   },
   rateLimit: {
     timeApp: process.env.RATE_LIMIT_TIME_APP || 5,
