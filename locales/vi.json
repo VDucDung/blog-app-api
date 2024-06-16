@@ -38,7 +38,9 @@
     "changePasswordSuccess": "Đổi mật khẩu thành công",
     "updateMeSuccess": "Cập nhật thông tin cá nhân thành công",
     "pleaseVerifyEmail": "Vui lý đăng ký email",
-    "verifyEmailSuccess": "Xác thực email thành công"
+    "verifyEmailSuccess": "Xác thực email thành công",
+    "resendEmailSuccess": "Gửi lại email để xác thực",
+    "invalidTokenVerifyExpired": "Thời gian xác nhận đã hết hạn, vui lòng gửi yêu cầu xác nhận lại"
   },
   "post": {
     "notFound": "Không tìm thấy bài viết",

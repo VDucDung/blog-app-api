@@ -16,6 +16,8 @@ const authMessage = () => {
     UPDATE_ME_SUCCESS: i18nService.translate('auth', 'updateMeSuccess'),
     PLEASE_VERIFY_EMAIL: i18nService.translate('auth', 'pleaseVerifyEmail'),
     VERIFY_EMAIL_SUCCESS: i18nService.translate('auth', 'verifyEmailSuccess'),
+    RESEND_EMAIL_SUCCESS: i18nService.translate('auth', 'resendEmailSuccess'),
+    INVALID_TOKEN_VERIFY_EXPIRED: i18nService.translate('auth', 'invalidTokenVerifyExpired'),
   };
 };
 

@@ -93,6 +93,16 @@ const renderPageVerifyEmail = catchAsync(async (req, res) => {
   res.render('pages/verify-email');
 });
 
+const reSendEmailVerify = catchAsync(async (req, res) => {
+  const { token } = req.query;
+
+  const originalToken = token.replaceAll(' ', '+');
+
+  await authService.reSendEmailVerify(originalToken);
+
+  res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().RESEND_EMAIL_SUCCESS));
+});
+
 module.exports = {
   getMe,
   login,
@@ -102,4 +112,5 @@ module.exports = {
   changePassword,
   verifyEmail,
   renderPageVerifyEmail,
+  reSendEmailVerify,
 };

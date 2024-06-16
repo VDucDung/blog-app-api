@@ -38,7 +38,9 @@
     "changePasswordSuccess": "Change password successfully",
     "updateMeSuccess": "Update me successfully",
     "pleaseVerifyEmail": "Please verify your email",
-    "verifyEmailSuccess": "Verify email successfully"
+    "verifyEmailSuccess": "Verify email successfully",
+    "resendEmailSuccess": "Resend email successfully",
+    "invalidTokenVerifyExpired": "The confirmation time has expired, please submit a confirmation request again"
   },
   "post": {
     "notFound": "Post not found",
