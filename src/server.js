@@ -4,17 +4,19 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { env, logger, morgan, i18nService } = require('./config');
-const { rateLimitApp } = require('./middlewares/rate-limit.middleware');
 const { errorConverter, errorHandler } = require('./middlewares/error.middleware');
 
 const apiRoute = require('./routes/api');
 const baseRouter = require('./routes/base.route');
+const limiter = require('./middlewares/rate-limit.middleware');
 
 const app = express();
 
 app.set('trust proxy', 1);
+app.set('views', 'src/views');
+app.set('view engine', 'ejs');
 
-app.use(rateLimitApp);
+app.use(limiter());
 app.use(helmet());
 
 app.use(express.json());
