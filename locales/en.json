@@ -37,7 +37,8 @@
     "invalidPassword": "Invalid password",
     "changePasswordSuccess": "Change password successfully",
     "updateMeSuccess": "Update me successfully",
-    "pleaseVerifyEmail": "Please verify your email"
+    "pleaseVerifyEmail": "Please verify your email",
+    "verifyEmailSuccess": "Verify email successfully"
   },
   "post": {
     "notFound": "Post not found",

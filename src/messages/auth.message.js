@@ -14,6 +14,8 @@ const authMessage = () => {
     INVALID_PASSWORD: i18nService.translate('auth', 'invalidPassword'),
     CHANGE_PASSWORD_SUCCESS: i18nService.translate('auth', 'changePasswordSuccess'),
     UPDATE_ME_SUCCESS: i18nService.translate('auth', 'updateMeSuccess'),
+    PLEASE_VERIFY_EMAIL: i18nService.translate('auth', 'pleaseVerifyEmail'),
+    VERIFY_EMAIL_SUCCESS: i18nService.translate('auth', 'verifyEmailSuccess'),
   };
 };
 

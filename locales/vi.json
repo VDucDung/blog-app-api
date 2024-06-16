@@ -37,7 +37,8 @@
     "invalidPassword": "Mật khẩu không chính xác",
     "changePasswordSuccess": "Đổi mật khẩu thành công",
     "updateMeSuccess": "Cập nhật thông tin cá nhân thành công",
-    "pleaseVerifyEmail": "Vui lý đăng ký email"
+    "pleaseVerifyEmail": "Vui lý đăng ký email",
+    "verifyEmailSuccess": "Xác thực email thành công"
   },
   "post": {
     "notFound": "Không tìm thấy bài viết",
