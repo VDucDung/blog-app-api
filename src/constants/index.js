@@ -45,8 +45,8 @@ const EMAIL_TYPES = {
 };
 
 const EMAIL_SUBJECT = {
-  VERIFY: '[HaUI Food] Verify your email address',
-  FORGOT: '[HaUI Food] Confirm OTP Forgot Password',
+  VERIFY: '[Blog App] Verify your email address',
+  FORGOT: '[Blog App] Confirm OTP Forgot Password',
 };
 
 const STATUS_FORGOT = {
