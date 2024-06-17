@@ -1,10 +1,11 @@
 const httpStatus = require('http-status');
 
+const { env } = require('../config');
 const response = require('../utils/response');
 const { authMessage } = require('../messages');
 const catchAsync = require('../utils/catchAsync');
 const { REQUEST_USER_KEY, URL_HOST } = require('../constants');
-const { authService, userService } = require('../services');
+const { authService, userService, cryptoService } = require('../services');
 
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
@@ -70,7 +71,6 @@ const verifyEmail = catchAsync(async (req, res) => {
 
 const renderPageVerifyEmail = catchAsync(async (req, res) => {
   const { token } = req.query;
-
   let payload, isExpired;
 
   try {

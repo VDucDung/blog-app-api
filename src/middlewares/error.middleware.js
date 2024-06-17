@@ -37,9 +37,9 @@ const errorHandler = (err, req, res, next) => {
     message: message || httpStatus[statusCode],
     stack: err.stack,
   };
-  if (env.NODE_ENV !== 'dev') delete response.stack;
+  if (env.NODE_ENV !== 'development') delete response.stack;
 
-  if (env.NODE_ENV === 'dev') {
+  if (env.NODE_ENV === 'development') {
     logger.error(err);
   }
 

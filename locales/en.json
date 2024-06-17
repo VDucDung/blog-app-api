@@ -27,7 +27,7 @@
   "auth": {
     "invalidLogin": "Invalid username or password",
     "loginSuccess": "Login successfully",
-    "registerSuccess": "Register successfully",
+    "registerSuccess": "Register successfully, please verify your email",
     "refreshTokenSuccess": "Refresh token successfully",
     "invalidToken": "Invalid token",
     "unauthorized": "Unauthorized",

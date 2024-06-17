@@ -7,11 +7,13 @@ const userSchema = new mongoose.Schema(
   {
     username: { type: String, trim: true, required: true },
     email: { type: String, trim: true, unique: true, required: true },
+    normalizedEmail: { type: String, trim: true, unique: true },
     password: { type: String, select: false, required: true },
     phone: { type: String, trim: true },
     dateOfBirth: { type: Date, default: '2000-01-01' },
     gender: { type: String, enum: ['male', 'female'], default: 'male' },
     isVerify: { type: Boolean, default: false },
+    verifyExpireAt: { type: Date },
     verificationCode: { type: String, required: false },
     isLocked: { type: Boolean },
     role: { type: String, enum: ['admin', 'user'], default: 'user' },

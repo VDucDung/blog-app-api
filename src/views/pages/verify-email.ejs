@@ -164,6 +164,7 @@
 
     formVerify.addEventListener('submit', async (event) => {
       event.preventDefault();
+      console.log('đã click');
       try {
         if (!token) {
           toastr.warning('Token không hợp lệ');

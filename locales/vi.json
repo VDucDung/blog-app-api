@@ -27,7 +27,7 @@
   "auth": {
     "invalidLogin": "Tài khoản hoặc mật khẩu không chính xác",
     "loginSuccess": "Đăng nhập thành công",
-    "registerSuccess": "Đăng ký thành công",
+    "registerSuccess": "Đăng ký thành công, vui lòng xác thực email",
     "refreshTokenSuccess": "Refresh token thành công",
     "invalidToken": "Token không chính xác",
     "unauthorized": "Bạn cần đăng nhập",

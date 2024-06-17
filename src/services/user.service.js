@@ -5,8 +5,12 @@ const SearchFeature = require('../utils/SearchFeature');
 const { env } = require('../config');
 const { User } = require('../models');
 const { userMessage } = require('../messages');
+const emailFormatter = require('../utils/emailFormatter');
 const getUserByEmail = async (email) => {
-  const user = await User.findOne({ email }).select('+password');
+  const normalizedEmail = emailFormatter(email);
+
+  const user = await User.findOne({ normalizedEmail }).select('+password');
+
   return user;
 };
 
@@ -19,11 +23,18 @@ const getUserById = async (id) => {
 };
 
 const createUser = async (userBody) => {
-  if (await User.isEmailTaken(userBody.email)) {
+  const normalizedEmail = emailFormatter(userBody.email);
+
+  if (await User.isEmailTaken(normalizedEmail)) {
     throw new ApiError(httpStatus.BAD_REQUEST, userMessage().EXISTS_EMAIL);
   }
+
+  userBody['normalizedEmail'] = normalizedEmail;
+
   const user = await User.create(userBody);
+
   user.password = undefined;
+
   return user;
 };
 

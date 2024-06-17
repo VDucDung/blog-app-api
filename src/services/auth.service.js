@@ -55,9 +55,7 @@ const register = async (username, email, password) => {
     },
     env.secret.tokenVerify,
   );
-
   const linkVerify = `${URL_HOST[env.NODE_ENV]}/api/v1/auth/verify?token=${tokenVerify}`;
-
   await emailService.sendEmail({
     emailData: {
       emails: email,

@@ -16,9 +16,9 @@ const env = {
     expiresRefreshToken: process.env.JWT_EXPIRES_REFRESH_MINUTES + 'm',
   },
   secret: {
-    tokenVerify: process.env.SECRET_TOKEN_VERIFY || 'secret-verify',
-    tokenForgot: process.env.SECRET_TOKEN_FORGOT || 'secret-forgot',
-    tokenVerifyOTP: process.env.SECRET_TOKEN_VERIFY_OTP || 'secret-verify-otp',
+    tokenVerify: process.env.SECRET_TOKEN_VERIFY,
+    tokenForgot: process.env.SECRET_TOKEN_FORGOT,
+    tokenVerifyOTP: process.env.SECRET_TOKEN_VERIFY_OTP,
   },
   rateLimit: {
     timeApp: +process.env.RATE_LIMIT_TIME_APP || 5,
