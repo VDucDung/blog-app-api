@@ -14,6 +14,15 @@ const userSchema = new mongoose.Schema(
     gender: { type: String, enum: ['male', 'female'], default: 'male' },
     isVerify: { type: Boolean, default: false },
     verifyExpireAt: { type: Date },
+    forgotStatus: {
+      type: String,
+      enum: {
+        NULL: null,
+        VERIFIED: 'verified',
+        VERIFY_OTP: 'verifyOTP',
+      },
+      default: null,
+    },
     verificationCode: { type: String, required: false },
     isLocked: { type: Boolean },
     role: { type: String, enum: ['admin', 'user'], default: 'user' },

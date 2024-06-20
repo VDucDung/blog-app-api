@@ -41,7 +41,10 @@
     "verifyEmailSuccess": "Verify email successfully",
     "resendEmailSuccess": "Resend email successfully",
     "invalidTokenVerifyExpired": "The confirmation time has expired, please submit a confirmation request again",
-    "pleaseWait": "Please wait a little longer"
+    "pleaseWait": "Please wait a little longer",
+    "forgotPasswordSuccess": "Send email successfully",
+    "emailNotExists": "Email does not exist",
+    "invalidOtp": "Invalid OTP"
   },
   "post": {
     "notFound": "Post not found",

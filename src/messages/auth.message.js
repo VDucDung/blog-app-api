@@ -19,6 +19,9 @@ const authMessage = () => {
     VERIFY_EMAIL_SUCCESS: i18nService.translate('auth', 'verifyEmailSuccess'),
     RESEND_EMAIL_SUCCESS: i18nService.translate('auth', 'resendEmailSuccess'),
     INVALID_TOKEN_VERIFY_EXPIRED: i18nService.translate('auth', 'invalidTokenVerifyExpired'),
+    FORGOT_PASSWORD_SUCCESS: i18nService.translate('auth', 'forgotPasswordSuccess'),
+    EMAIL_NOT_EXISTS: i18nService.translate('auth', 'emailNotExists'),
+    INVALID_OTP: i18nService.translate('auth', 'invalidOtp'),
   };
 };
 

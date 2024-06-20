@@ -104,6 +104,30 @@ const reSendEmailVerify = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().RESEND_EMAIL_SUCCESS));
 });
 
+const forgotPassword = catchAsync(async (req, res) => {
+  const { email } = req.body;
+
+  const tokenForgot = await authService.forgotPassword(email);
+
+  res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().FORGOT_PASSWORD_SUCCESS, { tokenForgot }));
+});
+
+const verifyOTPForgotPassword = catchAsync(async (req, res) => {
+  const { tokenForgot, otp } = req.body;
+
+  const tokenVerifyOTP = await authService.verifyOTPForgotPassword(tokenForgot, otp);
+
+  res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().VERIFY_OTP_SUCCESS, { tokenVerifyOTP }));
+});
+
+const resetPassword = catchAsync(async (req, res) => {
+  const { tokenVerifyOTP, newPassword } = req.body;
+
+  await authService.resetPassword(tokenVerifyOTP, newPassword);
+
+  res.status(httpStatus.OK).json(response(httpStatus.OK, authMessage().CHANGE_PASSWORD_SUCCESS));
+});
+
 module.exports = {
   getMe,
   login,
@@ -114,4 +138,8 @@ module.exports = {
   verifyEmail,
   renderPageVerifyEmail,
   reSendEmailVerify,
+  forgotPassword,
+  verifyOTPForgotPassword,
+  resetPassword,
+  resetPassword,
 };

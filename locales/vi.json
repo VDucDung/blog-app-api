@@ -41,7 +41,10 @@
     "verifyEmailSuccess": "Xác thực email thành công",
     "resendEmailSuccess": "Gửi lại email để xác thực",
     "invalidTokenVerifyExpired": "Thời gian xác nhận đã hết hạn, vui lòng gửi yêu cầu xác nhận lại",
-    "pleaseWait": "Vui lòng chờ thêm một chút"
+    "pleaseWait": "Vui lòng chờ thêm một chút",
+    "forgotPasswordSuccess": "Gửi email thành công",
+    "emailNotExists": "Không tìm thấy email",
+    "invalidOtp": "OTP không hợp lệ"
   },
   "post": {
     "notFound": "Không tìm thấy bài viết",

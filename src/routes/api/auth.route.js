@@ -31,4 +31,14 @@ authRouter.route('/refresh-tokens').post(validate(authValidation.refreshToken), 
 
 authRouter.route('/change-password').post(auth, validate(authValidation.changePassword), authController.changePassword);
 
+authRouter.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
+
+authRouter.post(
+  '/verify-otp-forgot-password',
+  validate(authValidation.verifyOTPForgotPassword),
+  authController.verifyOTPForgotPassword,
+);
+
+authRouter.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
+
 module.exports = authRouter;

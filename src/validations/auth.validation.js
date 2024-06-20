@@ -84,6 +84,26 @@ const reSendEmailVerify = async (token) => {
   await user.save();
 };
 
+const forgotPassword = {
+  body: Joi.object().keys({
+    email: Joi.string().required().custom(email),
+  }),
+};
+
+const verifyOTPForgotPassword = {
+  body: Joi.object().keys({
+    tokenForgot: Joi.string().required(),
+    otp: Joi.string().required(),
+  }),
+};
+
+const resetPassword = {
+  body: Joi.object().keys({
+    tokenVerifyOTP: Joi.string().required(),
+    newPassword: Joi.string().custom(password),
+  }),
+};
+
 module.exports = {
   login,
   register,
@@ -92,4 +112,7 @@ module.exports = {
   updateMe,
   verifyEmail,
   reSendEmailVerify,
+  forgotPassword,
+  verifyOTPForgotPassword,
+  resetPassword,
 };
