@@ -3,6 +3,7 @@ const { i18nService } = require('../config');
 const authMessage = () => {
   return {
     INVALID_LOGIN: i18nService.translate('auth', 'invalidLogin'),
+    PLEASE_WAIT: i18nService.translate('auth', 'pleaseWait'),
     LOGIN_SUCCESS: i18nService.translate('auth', 'loginSuccess'),
     REGISTER_SUCCESS: i18nService.translate('auth', 'registerSuccess'),
     REFRESH_TOKEN_SUCCESS: i18nService.translate('auth', 'refreshTokenSuccess'),

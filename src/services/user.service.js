@@ -6,6 +6,7 @@ const { env } = require('../config');
 const { User } = require('../models');
 const { userMessage } = require('../messages');
 const emailFormatter = require('../utils/emailFormatter');
+
 const getUserByEmail = async (email) => {
   const normalizedEmail = emailFormatter(email);
 

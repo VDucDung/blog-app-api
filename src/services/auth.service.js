@@ -5,7 +5,14 @@ const { env } = require('../config');
 const ApiError = require('../utils/ApiError');
 const userService = require('./user.service');
 const { userMessage, authMessage } = require('../messages');
-const { URL_HOST, TOKEN_TYPES, EMAIL_TYPES, EMAIL_SUBJECT, EXPIRES_TOKEN_EMAIL_VERIFY } = require('../constants');
+const {
+  URL_HOST,
+  TOKEN_TYPES,
+  EMAIL_TYPES,
+  EMAIL_SUBJECT,
+  EXPIRES_TOKEN_EMAIL_VERIFY,
+  TIME_DIFF_EMAIL_VERIFY,
+} = require('../constants');
 const emailService = require('./email.service');
 const cryptoService = require('./crypto.service');
 
@@ -135,10 +142,48 @@ const verifyEmail = async (token) => {
   return user;
 };
 
+const reSendEmailVerify = async (token) => {
+  const expires = Date.now() + EXPIRES_TOKEN_EMAIL_VERIFY;
+
+  const { isExpired, payload } = cryptoService.expiresCheck(token, env.secret.tokenVerify, TIME_DIFF_EMAIL_VERIFY);
+
+  if (!isExpired) {
+    throw new ApiError(httpStatus.BAD_REQUEST, authMessage().PLEASE_WAIT);
+  }
+
+  const user = await userService.getUserByEmail(payload.email);
+  if (user.isVerify) {
+    throw new ApiError(httpStatus.BAD_REQUEST, authMessage().INVALID_TOKEN);
+  }
+
+  const tokenVerify = cryptoService.encryptObj(
+    {
+      expires,
+      email: user.email,
+      type: TOKEN_TYPES.VERIFY,
+    },
+    env.secret.tokenVerify,
+  );
+
+  const linkVerify = `${URL_HOST[env.NODE_ENV]}/api/v1/auth/verify?token=${tokenVerify}`;
+  await emailService.sendEmail({
+    emailData: {
+      emails: user.email,
+      subject: EMAIL_SUBJECT.VERIFY,
+      linkVerify,
+    },
+    type: EMAIL_TYPES.VERIFY,
+  });
+
+  user.verifyExpireAt = expires;
+  await user.save();
+};
+
 module.exports = {
   login,
   register,
   refreshToken,
   changePassword,
   verifyEmail,
+  reSendEmailVerify,
 };

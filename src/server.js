@@ -1,14 +1,16 @@
 const cors = require('cors');
+const xss = require('xss-clean');
 const express = require('express');
-const helmet = require('helmet');
 const mongoose = require('mongoose');
+const compression = require('compression');
 const cookieParser = require('cookie-parser');
-const { env, logger, morgan, i18nService } = require('./config');
-const { errorConverter, errorHandler } = require('./middlewares/error.middleware');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const apiRoute = require('./routes/api');
 const baseRouter = require('./routes/base.route');
 const limiter = require('./middlewares/rate-limit.middleware');
+const { env, logger, morgan, i18nService } = require('./config');
+const { errorConverter, errorHandler } = require('./middlewares/error.middleware');
 
 const app = express();
 
@@ -17,12 +19,19 @@ app.set('views', 'src/views');
 app.set('view engine', 'ejs');
 
 app.use(limiter());
-app.use(helmet());
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(xss());
+app.use(mongoSanitize());
+
+app.use(compression());
+
+app.use(express.json());
+app.use(cookieParser());
+
 app.use(cors());
-app.options('*', cors());
 
 app.use((req, res, next) => {
   next(i18nService.setLocale(req, res));

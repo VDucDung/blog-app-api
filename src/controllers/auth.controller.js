@@ -71,6 +71,7 @@ const verifyEmail = catchAsync(async (req, res) => {
 
 const renderPageVerifyEmail = catchAsync(async (req, res) => {
   const { token } = req.query;
+
   let payload, isExpired;
 
   try {

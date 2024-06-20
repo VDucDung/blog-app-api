@@ -118,7 +118,6 @@
       }
     </style>
   </head>
-
   <body>
     <div class="main">
       <form action="" class="form" id="form-verify">
@@ -133,58 +132,58 @@
         </p>
       </form>
     </div>
-  </body>
-  <script>
-    function getTokenFromURL() {
-      var url = window.location.href;
-      var queryString = url.split('?')[1];
 
-      if (queryString) {
-        var params = getParams(queryString);
-        return params['token'] || '';
+    <script>
+      function getTokenFromURL() {
+        var url = window.location.href;
+        var queryString = url.split('?')[1];
+
+        if (queryString) {
+          var params = getParams(queryString);
+          return params['token'] || '';
+        }
+
+        return '';
       }
 
-      return '';
-    }
+      function getParams(queryString) {
+        var params = {};
+        var keyValuePairs = queryString.split('&');
 
-    function getParams(queryString) {
-      var params = {};
-      var keyValuePairs = queryString.split('&');
-
-      keyValuePairs.forEach(function (pair) {
-        var keyValue = pair.split('=');
-        params[keyValue[0]] = decodeURIComponent(keyValue[1] || '');
-      });
-
-      return params;
-    }
-
-    const formVerify = document.getElementById('form-verify');
-    const token = getTokenFromURL();
-
-    formVerify.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      console.log('đã click');
-      try {
-        if (!token) {
-          toastr.warning('Token không hợp lệ');
-          return;
-        }
-        const response = await fetch(`/api/v1/auth/verify?token=${token}`, {
-          method: 'POST',
+        keyValuePairs.forEach(function (pair) {
+          var keyValue = pair.split('=');
+          params[keyValue[0]] = decodeURIComponent(keyValue[1] || '');
         });
-        const data = await response.json();
-        if (data.code === 200) {
-          toastr.success('Xác nhận thành công, quay sang trang chủ sau 3s');
-          setTimeout(() => {
-            window.location.href = 'https://blog-app-client-sooty.vercel.app/auth/login';
-          }, 3000);
-        } else {
-          toastr.error(data.message);
-        }
-      } catch (error) {
-        toastr.error('Đã sảy ra lỗi, vui lòng thử lại');
+
+        return params;
       }
-    });
-  </script>
+
+      const formVerify = document.getElementById('form-verify');
+      const token = getTokenFromURL();
+
+      formVerify.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        try {
+          if (!token) {
+            toastr.warning('Token không hợp lệ');
+            return;
+          }
+          const response = await fetch(`/api/v1/auth/verify?token=${token}`, {
+            method: 'POST',
+          });
+          const data = await response.json();
+          if (data.code === 200) {
+            toastr.success('Xác nhận thành công, quay sang trang chủ sau 3s');
+            setTimeout(() => {
+              window.location.href = 'https://blog-app-client-sooty.vercel.app/auth/login';
+            }, 3000);
+          } else {
+            toastr.error(data.message);
+          }
+        } catch (error) {
+          toastr.error('Đã sảy ra lỗi, vui lòng thử lại');
+        }
+      });
+    </script>
+  </body>
 </html>
