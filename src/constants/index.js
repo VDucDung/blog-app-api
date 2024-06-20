@@ -11,7 +11,7 @@ const REQUEST_USER_KEY = 'user';
 const PATH_API_DEFAULT = '/api/v1';
 
 const URL_HOST = {
-  production: 'https://blog-app-client-sooty.vercel.app',
+  production: 'https://blog-app-api-crer.onrender.com',
   development: 'http://localhost:3000',
 };
 
