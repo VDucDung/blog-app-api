@@ -6,5 +6,6 @@ module.exports.cacheService = require('./cache.service');
 module.exports.uploadService = require('./upload.service');
 module.exports.cryptoService = require('./crypto.service');
 module.exports.commentService = require('./comment.service');
+module.exports.contactService = require('./contact.service');
 module.exports.categoryService = require('./category.service');
 module.exports.rabbitmqService = require('./rabbitmq.service');
