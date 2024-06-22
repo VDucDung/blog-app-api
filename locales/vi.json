@@ -72,5 +72,14 @@
     "updateSuccess": "Cập nhật thể loại thành công",
     "deleteSuccess": "Xóa thể loại thành công",
     "alreadyExists": "thể loại đã tồn tại"
+  },
+  "contact": {
+    "notFound": "Không tìm thấy liên hệ",
+    "findSuccess": "Tìm thành công",
+    "findListSuccess": "Tìm danh sách liên hệ thành công",
+    "createSuccess": "Tạo mới liên hệ thành công",
+    "updateSuccess": "Cập nhật liên hệ thành công",
+    "deleteSuccess": "Xóa liên hệ thành công",
+    "alreadyExists": "liên hệ đã tồn tại"
   }
 }

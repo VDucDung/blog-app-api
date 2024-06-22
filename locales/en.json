@@ -72,5 +72,14 @@
     "updateSuccess": "Category updated successfully",
     "deleteSuccess": "Category deleted successfully",
     "alreadyExists": "Category already exists"
+  },
+  "contact": {
+    "notFound": "Contact not found",
+    "findSuccess": "Contact found successfully",
+    "findListSuccess": "Contact list found successfully",
+    "createSuccess": "New Contact created successfully",
+    "updateSuccess": "Contact updated successfully",
+    "deleteSuccess": "Contact deleted successfully",
+    "alreadyExists": "Contact already exists"
   }
 }
