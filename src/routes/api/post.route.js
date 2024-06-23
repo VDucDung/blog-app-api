@@ -18,17 +18,7 @@ postRouter
     postController.createPost,
   );
 
-postRouter
-  .route('/:slug')
-  .get(validate(postValidation.getPostBySlug), postController.getPost)
-  .put(
-    auth,
-    authorize('user', 'admin'),
-    uploadService.uploadImage.single('image'),
-    validate(postValidation.updatePost),
-    postController.updatePost,
-  )
-  .delete(auth, authorize('user', 'admin'), validate(postValidation.deletePost), postController.deletePost);
+postRouter.route('/:slug').get(validate(postValidation.getPostBySlug), postController.getPost);
 
 postRouter
   .route('/post/:postId')
@@ -41,5 +31,22 @@ postRouter
     postController.updatePost,
   )
   .delete(auth, authorize('admin'), validate(postValidation.deletePost), postController.deletePost);
+
+postRouter
+  .route('/users/:userId')
+  .get(validate(postValidation.getPosts), postController.getPostsByUserId)
+  .put(
+    auth,
+    authorize(['admin', 'user']),
+    uploadService.uploadImage.single('image'),
+    validate(postValidation.updatePostByUserId),
+    postController.updatePostByUserId,
+  )
+  .delete(
+    auth,
+    authorize(['admin', 'user']),
+    validate(postValidation.deletePostByUserId),
+    postController.deletePostByUserId,
+  );
 
 module.exports = postRouter;

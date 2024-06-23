@@ -53,7 +53,8 @@
     "createSuccess": "Tạo mới bài viết thành công",
     "updateSuccess": "Cập nhật bài viết thành công",
     "deleteSuccess": "Xóa bài viết thành công",
-    "alreadyExists": "Bài viết đã tồn tại"
+    "alreadyExists": "Bài viết đã tồn tại",
+    "unauthorized": "Bạn không có quyền"
   },
   "comment": {
     "notFound": "Không tìm thấy bình luận",

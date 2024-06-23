@@ -59,9 +59,30 @@ const updatePost = {
   }),
 };
 
+const updatePostByUserId = {
+  params: Joi.object().keys({
+    userId: Joi.string().custom(objectId),
+  }),
+  body: Joi.object().keys({
+    title: Joi.string(),
+    caption: Joi.string(),
+    image: Joi.string().allow(null, ''),
+    body: Joi.string().allow(null, ''),
+    postId: Joi.string().optional().custom(objectId),
+    tags: Joi.string().allow(null, ''),
+    categories: Joi.string().allow(null, ''),
+  }),
+};
+
 const deletePost = {
   params: Joi.object().keys({
     postId: Joi.string().custom(objectId),
+  }),
+};
+
+const deletePostByUserId = {
+  params: Joi.object().keys({
+    userId: Joi.string().custom(objectId),
   }),
 };
 
@@ -72,4 +93,6 @@ module.exports = {
   getPostBySlug,
   updatePost,
   deletePost,
+  updatePostByUserId,
+  deletePostByUserId,
 };

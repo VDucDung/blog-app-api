@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 
-const { Post } = require('../models');
+const { Post, User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { postMessage } = require('../messages');
 const SearchFeature = require('../utils/SearchFeature');
@@ -52,6 +52,14 @@ const getPostBySlug = async (slug) => {
     },
   ]);
   return post;
+};
+
+const getPostsByUserId = async (userId) => {
+  const posts = await Post.find({ userId });
+  if (!posts) {
+    throw new ApiError(httpStatus.NOT_FOUND, postMessage().NOT_FOUND);
+  }
+  return posts;
 };
 
 const getPostById = async (id) => {
@@ -113,8 +121,30 @@ const updatePostById = async (postId, updateBody) => {
   return post;
 };
 
+const updatePostByUserId = async (userId, updateBody) => {
+  const { postId, ...data } = updateBody;
+  const post = await getPostById(postId);
+  if (userId !== String(post.userId)) {
+    throw new ApiError(httpStatus.FORBIDDEN, postMessage().FORBIDDEN);
+  }
+
+  Object.assign(post, data);
+  await post.save();
+  return post;
+};
+
 const deletePostById = async (postId) => {
   const post = await getPostById(postId);
+  await post.deleteOne();
+  return post;
+};
+
+const deletePostByUserId = async (userId, postId) => {
+  const post = await getPostById(postId);
+  if (userId !== String(post.userId)) {
+    throw new ApiError(httpStatus.FORBIDDEN, postMessage().FORBIDDEN);
+  }
+
   await post.deleteOne();
   return post;
 };
@@ -128,4 +158,7 @@ module.exports = {
   getAllPosts,
   updatePostById,
   deletePostById,
+  getPostsByUserId,
+  updatePostByUserId,
+  deletePostByUserId,
 };

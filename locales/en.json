@@ -53,7 +53,8 @@
     "createSuccess": "New Post created successfully",
     "updateSuccess": "Post updated successfully",
     "deleteSuccess": "Post deleted successfully",
-    "alreadyExists": "Post already exists"
+    "alreadyExists": "Post already exists",
+    "forbidden": "You do not have permission"
   },
   "comment": {
     "notFound": "Comment not found",
