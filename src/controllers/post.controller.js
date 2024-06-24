@@ -18,8 +18,33 @@ const createPost = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).json(response(httpStatus.CREATED, postMessage().CREATE_SUCCESS, post));
 });
 
-const getPosts = catchAsync(async (req, res) => {
-  const posts = await postService.getPostsByKeyword(req.query);
+const getPostsByUser = catchAsync(async (req, res) => {
+  const filter = req.query.keyword || '';
+  const sortBy = req.query.sortBy || 'desc';
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.limit) || 10;
+
+  const { posts, total, pages } = await postService.getPostsByUser(
+    req[REQUEST_USER_KEY].id,
+    filter,
+    page,
+    pageSize,
+    sortBy,
+  );
+
+  res.header({
+    'Access-Control-Expose-Headers': 'x-filter, x-totalcount, x-currentpage, x-pagesize, x-totalpagecount',
+    'x-filter': filter,
+    'x-totalcount': JSON.stringify(total),
+    'x-currentpage': JSON.stringify(page),
+    'x-pagesize': JSON.stringify(pageSize),
+    'x-totalpagecount': JSON.stringify(pages),
+  });
+
+  if (page > pages) {
+    return res.status(httpStatus.NOT_FOUND).json(response(httpStatus.NOT_FOUND, postMessage().NOT_FOUND));
+  }
+
   res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().FIND_LIST_SUCCESS, posts));
 });
 
@@ -75,7 +100,7 @@ const deletePost = catchAsync(async (req, res) => {
 
 module.exports = {
   createPost,
-  getPosts,
+  getPostsByUser,
   getAllPosts,
   getPost,
   updatePost,

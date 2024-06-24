@@ -32,4 +32,6 @@ postRouter
   )
   .delete(auth, authorize(['admin', 'user']), validate(postValidation.deletePost), postController.deletePost);
 
+postRouter.route('/user/:userId').get(auth, validate(postValidation.getPostsByUser), postController.getPostsByUser);
+
 module.exports = postRouter;

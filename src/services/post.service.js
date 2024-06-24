@@ -6,6 +6,7 @@ const { postMessage } = require('../messages');
 const cacheService = require('../services/cache.service');
 const generateUniqueSlug = require('../utils/generateUniqueSlug');
 const { KEY_CACHE } = require('../constants');
+const SearchFeature = require('../utils/SearchFeature');
 
 const getPostBySlug = async (slug) => {
   const post = await Post.findOne({ slug }).populate([
@@ -61,6 +62,36 @@ const createPost = async (postBody) => {
   return post;
 };
 
+const getPostsByUser = async (userId, filter, page, pageSize, sortBy) => {
+  let where = {};
+  if (filter) {
+    where.$or = [{ title: { $regex: filter, $options: 'i' } }, { caption: { $regex: filter, $options: 'i' } }].filter(
+      Boolean,
+    );
+  }
+  const skip = (page - 1) * pageSize;
+  const total = await Post.find({ userId }).find(where).countDocuments();
+  const pages = Math.ceil(total / pageSize);
+
+  const posts = await Post.find({ userId })
+    .find(where)
+    .skip(skip)
+    .limit(pageSize)
+    .populate([
+      {
+        path: 'userId',
+        select: ['avatar', 'username', 'isVerify'],
+      },
+      {
+        path: 'categories',
+        select: ['name'],
+      },
+    ])
+    .sort({ createdAt: sortBy });
+
+  return { posts, total, page, pageSize, pages };
+};
+
 const getAllPosts = async (filter, page, pageSize, sortBy) => {
   const key = `${KEY_CACHE}:posts`;
   const postsCache = cacheService.get(key);
@@ -68,11 +99,9 @@ const getAllPosts = async (filter, page, pageSize, sortBy) => {
 
   let where = {};
   if (filter) {
-    where.$or = [
-      { title: { $regex: filter, $options: 'i' } },
-      { caption: { $regex: filter, $options: 'i' } },
-      { userId: filter },
-    ].filter(Boolean);
+    where.$or = [{ title: { $regex: filter, $options: 'i' } }, { caption: { $regex: filter, $options: 'i' } }].filter(
+      Boolean,
+    );
   }
 
   const skip = (page - 1) * pageSize;
@@ -137,4 +166,5 @@ module.exports = {
   getAllPosts,
   updatePostById,
   deletePostById,
+  getPostsByUser,
 };
