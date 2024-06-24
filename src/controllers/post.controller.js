@@ -48,11 +48,6 @@ const getAllPosts = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().FIND_LIST_SUCCESS, posts));
 });
 
-const getPostsByUserId = catchAsync(async (req, res) => {
-  const posts = await postService.getPostsByUserId(req.params.userId);
-  res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().FIND_LIST_SUCCESS, posts));
-});
-
 const getPost = catchAsync(async (req, res) => {
   const post = await postService.getPostBySlug(req.params.slug);
 
@@ -68,29 +63,13 @@ const updatePost = catchAsync(async (req, res) => {
   if (req.body.body) req.body['body'] = JSON.parse(req.body.body);
   if (req.body.tags) req.body['tags'] = JSON.parse(req.body.tags);
   if (req.body.categories) req.body['categories'] = JSON.parse(req.body.categories);
-  const post = await postService.updatePostById(req.params.postId, req.body);
-
-  res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().UPDATE_SUCCESS, post));
-});
-
-const updatePostByUserId = catchAsync(async (req, res) => {
-  if (req.file) req.body['image'] = req.file.path;
-  if (req.body.postId) req.body['postId'] = req.body.postId;
-  if (req.body.body) req.body['body'] = JSON.parse(req.body.body);
-  if (req.body.tags) req.body['tags'] = JSON.parse(req.body.tags);
-  if (req.body.categories) req.body['categories'] = JSON.parse(req.body.categories);
-  const post = await postService.updatePostByUserId(req.params.userId, req.body);
+  const post = await postService.updatePostById(req[REQUEST_USER_KEY].id, req.params.postId, req.body);
 
   res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().UPDATE_SUCCESS, post));
 });
 
 const deletePost = catchAsync(async (req, res) => {
-  const post = await postService.deletePostById(req.params.postId);
-  res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().DELETE_SUCCESS, post));
-});
-
-const deletePostByUserId = catchAsync(async (req, res) => {
-  const post = await postService.deletePostByUserId(req.params.userId, req.body.postId);
+  const post = await postService.deletePostById(req[REQUEST_USER_KEY].id, req.params.postId);
   res.status(httpStatus.OK).json(response(httpStatus.OK, postMessage().DELETE_SUCCESS, post));
 });
 
@@ -101,7 +80,4 @@ module.exports = {
   getPost,
   updatePost,
   deletePost,
-  getPostsByUserId,
-  updatePostByUserId,
-  deletePostByUserId,
 };

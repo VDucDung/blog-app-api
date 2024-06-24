@@ -3,18 +3,10 @@ const httpStatus = require('http-status');
 const { Post, User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { postMessage } = require('../messages');
-const SearchFeature = require('../utils/SearchFeature');
 const cacheService = require('../services/cache.service');
 const generateUniqueSlug = require('../utils/generateUniqueSlug');
+const { KEY_CACHE } = require('../constants');
 
-const getPostsByuserId = async (userId) => {
-  const posts = await Post.find({ userId });
-  return posts;
-};
-const getPostByTitle = async (title) => {
-  const post = await Post.findOne({ title });
-  return post;
-};
 const getPostBySlug = async (slug) => {
   const post = await Post.findOne({ slug }).populate([
     {
@@ -54,14 +46,6 @@ const getPostBySlug = async (slug) => {
   return post;
 };
 
-const getPostsByUserId = async (userId) => {
-  const posts = await Post.find({ userId });
-  if (!posts) {
-    throw new ApiError(httpStatus.NOT_FOUND, postMessage().NOT_FOUND);
-  }
-  return posts;
-};
-
 const getPostById = async (id) => {
   const post = await Post.findById(id);
   if (!post) {
@@ -77,16 +61,18 @@ const createPost = async (postBody) => {
   return post;
 };
 
-const getAllPosts = async (filter, page, pageSize, sortBy, checkCache) => {
-  const key = `${filter}:${page}:${pageSize}:${sortBy}:${checkCache}:posts`;
+const getAllPosts = async (filter, page, pageSize, sortBy) => {
+  const key = `${KEY_CACHE}:posts`;
   const postsCache = cacheService.get(key);
   if (postsCache) return postsCache;
 
   let where = {};
   if (filter) {
-    where.$or = [{ title: { $regex: filter, $options: 'i' } }, { caption: { $regex: filter, $options: 'i' } }].filter(
-      Boolean,
-    );
+    where.$or = [
+      { title: { $regex: filter, $options: 'i' } },
+      { caption: { $regex: filter, $options: 'i' } },
+      { userId: filter },
+    ].filter(Boolean);
   }
 
   const skip = (page - 1) * pageSize;
@@ -113,52 +99,42 @@ const getAllPosts = async (filter, page, pageSize, sortBy, checkCache) => {
   return { posts, total, page, pageSize, pages };
 };
 
-const updatePostById = async (postId, updateBody) => {
+const updatePostById = async (userId, postId, updateBody) => {
   const post = await getPostById(postId);
+  const user = await User.findById(userId);
+
+  if (userId !== String(post.userId) && user.role !== 'admin') {
+    throw new ApiError(httpStatus.FORBIDDEN, postMessage().FORBIDDEN);
+  }
+
   post.slug = await generateUniqueSlug(updateBody.title, Post);
   Object.assign(post, updateBody);
+
   await post.save();
+  cacheService.del(`${KEY_CACHE}:posts`);
+
   return post;
 };
 
-const updatePostByUserId = async (userId, updateBody) => {
-  const { postId, ...data } = updateBody;
+const deletePostById = async (userId, postId) => {
   const post = await getPostById(postId);
-  if (userId !== String(post.userId)) {
-    throw new ApiError(httpStatus.FORBIDDEN, postMessage().FORBIDDEN);
-  }
+  const user = await User.findById(userId);
 
-  Object.assign(post, data);
-  await post.save();
-  return post;
-};
-
-const deletePostById = async (postId) => {
-  const post = await getPostById(postId);
-  await post.deleteOne();
-  return post;
-};
-
-const deletePostByUserId = async (userId, postId) => {
-  const post = await getPostById(postId);
-  if (userId !== String(post.userId)) {
+  if (userId !== String(post.userId) && user.role !== 'admin') {
     throw new ApiError(httpStatus.FORBIDDEN, postMessage().FORBIDDEN);
   }
 
   await post.deleteOne();
+
+  cacheService.del(`${KEY_CACHE}:posts`);
   return post;
 };
 
 module.exports = {
-  getPostsByuserId,
-  getPostByTitle,
   getPostBySlug,
   getPostById,
   createPost,
   getAllPosts,
   updatePostById,
   deletePostById,
-  getPostsByUserId,
-  updatePostByUserId,
-  deletePostByUserId,
 };

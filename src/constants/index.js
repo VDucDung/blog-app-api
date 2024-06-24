@@ -10,6 +10,8 @@ const REQUEST_USER_KEY = 'user';
 
 const PATH_API_DEFAULT = '/api/v1';
 
+const KEY_CACHE = 'key_cache';
+
 const URL_HOST = {
   production: 'https://blog-app-api-crer.onrender.com',
   development: 'http://localhost:3000',
@@ -77,4 +79,5 @@ module.exports = {
   STATUS_FORGOT,
   LENGTH_OTP_DEFAULT,
   QUEUE_TYPES,
+  KEY_CACHE,
 };

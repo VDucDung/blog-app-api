@@ -22,31 +22,14 @@ postRouter.route('/:slug').get(validate(postValidation.getPostBySlug), postContr
 
 postRouter
   .route('/post/:postId')
-  .get(auth, authorize('admin'), validate(postValidation.getPost), postController.getPost)
+  .get(validate(postValidation.getPost), postController.getPost)
   .put(
     auth,
-    authorize('admin'),
+    authorize(['admin', 'user']),
     uploadService.uploadImage.single('image'),
     validate(postValidation.updatePost),
     postController.updatePost,
   )
-  .delete(auth, authorize('admin'), validate(postValidation.deletePost), postController.deletePost);
-
-postRouter
-  .route('/users/:userId')
-  .get(validate(postValidation.getPosts), postController.getPostsByUserId)
-  .put(
-    auth,
-    authorize(['admin', 'user']),
-    uploadService.uploadImage.single('image'),
-    validate(postValidation.updatePostByUserId),
-    postController.updatePostByUserId,
-  )
-  .delete(
-    auth,
-    authorize(['admin', 'user']),
-    validate(postValidation.deletePostByUserId),
-    postController.deletePostByUserId,
-  );
+  .delete(auth, authorize(['admin', 'user']), validate(postValidation.deletePost), postController.deletePost);
 
 module.exports = postRouter;

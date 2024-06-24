@@ -40,7 +40,7 @@ const getPostBySlug = {
 
 const getPost = {
   params: Joi.object().keys({
-    userId: Joi.string().custom(objectId),
+    postId: Joi.string().custom(objectId),
   }),
 };
 
