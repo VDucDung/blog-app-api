@@ -59,6 +59,10 @@ const STATUS_FORGOT = {
 
 const LENGTH_OTP_DEFAULT = 6;
 
+const LOG_DIR = 'logs';
+
+const LOG_FILENAME = 'logger.log';
+
 module.exports = {
   LANGUAGE_DEFAULT,
   LOCALES,
@@ -80,4 +84,6 @@ module.exports = {
   LENGTH_OTP_DEFAULT,
   QUEUE_TYPES,
   KEY_CACHE,
+  LOG_DIR,
+  LOG_FILENAME,
 };

@@ -4,6 +4,7 @@ const env = {
   port: process.env.PORT || 3000,
   NODE_ENV: process.env.NODE_ENV || 'development',
   mongoURI: process.env.MONGO_URI,
+  listIPPing: process.env.LIST_IP_PING || '',
   admin: {
     email: process.env.ADMIN_EMAIL,
     password: process.env.ADMIN_PASSWORD,
@@ -35,6 +36,10 @@ const env = {
     folderName: 'blog-app',
     typeAllow: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
     maxFileSize: (process.env.MAX_FILE_SIZE_IMAGE_MB || 3) * 1024 * 1024,
+  },
+  apiKey: {
+    mailer: process.env.API_KEY_MAILER || 'mailer',
+    cronJob: process.env.API_KEY_CRON_JOB || 'cron-job',
   },
 };
 

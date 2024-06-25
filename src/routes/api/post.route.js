@@ -5,6 +5,7 @@ const { postController } = require('../../controllers');
 const { postValidation } = require('../../validations');
 const validate = require('../../middlewares/validate.middleware');
 const { auth, authorize } = require('../../middlewares/auth.middleware');
+const { logAuthenticatedRequest } = require('../../middlewares/logger.middleware');
 
 const postRouter = express.Router();
 
@@ -13,6 +14,7 @@ postRouter
   .get(validate(postValidation.getPosts), postController.getAllPosts)
   .post(
     auth,
+    logAuthenticatedRequest,
     uploadService.uploadImage.single('image'),
     validate(postValidation.createPost),
     postController.createPost,
@@ -25,13 +27,22 @@ postRouter
   .get(validate(postValidation.getPost), postController.getPost)
   .put(
     auth,
+    logAuthenticatedRequest,
     authorize(['admin', 'user']),
     uploadService.uploadImage.single('image'),
     validate(postValidation.updatePost),
     postController.updatePost,
   )
-  .delete(auth, authorize(['admin', 'user']), validate(postValidation.deletePost), postController.deletePost);
+  .delete(
+    auth,
+    logAuthenticatedRequest,
+    authorize(['admin', 'user']),
+    validate(postValidation.deletePost),
+    postController.deletePost,
+  );
 
-postRouter.route('/user/:userId').get(auth, validate(postValidation.getPostsByUser), postController.getPostsByUser);
+postRouter
+  .route('/user/:userId')
+  .get(auth, logAuthenticatedRequest, validate(postValidation.getPostsByUser), postController.getPostsByUser);
 
 module.exports = postRouter;

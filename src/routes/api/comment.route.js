@@ -4,12 +4,14 @@ const { commentController } = require('../../controllers');
 const { commentValidation } = require('../../validations');
 const validate = require('../../middlewares/validate.middleware');
 const { auth, authorize } = require('../../middlewares/auth.middleware');
+const { logAuthenticatedRequest } = require('../../middlewares/logger.middleware');
+
 const commentRouter = express.Router();
 
 commentRouter
   .route('/')
   .get(validate(commentValidation.getComments), commentController.getAllComments)
-  .post(auth, validate(commentValidation.createComment), commentController.createComment);
+  .post(auth, logAuthenticatedRequest, validate(commentValidation.createComment), commentController.createComment);
 
 commentRouter
   .route('/:commentId')

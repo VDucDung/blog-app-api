@@ -7,13 +7,20 @@ const { authValidation } = require('../../validations');
 const { auth } = require('../../middlewares/auth.middleware');
 const validate = require('../../middlewares/validate.middleware');
 const limiter = require('../../middlewares/rate-limit.middleware');
+const { logAuthenticatedRequest } = require('../../middlewares/logger.middleware');
 
 const authRouter = express.Router();
 
 authRouter
   .route('/me')
-  .get(auth, authController.getMe)
-  .put(auth, uploadService.uploadImage.single('avatar'), validate(authValidation.updateMe), authController.updateMe);
+  .get(auth, logAuthenticatedRequest, authController.getMe)
+  .put(
+    auth,
+    logAuthenticatedRequest,
+    uploadService.uploadImage.single('avatar'),
+    validate(authValidation.updateMe),
+    authController.updateMe,
+  );
 
 authRouter.get('/verify', authController.renderPageVerifyEmail);
 
@@ -29,7 +36,9 @@ authRouter.route('/register').post(validate(authValidation.register), authContro
 
 authRouter.route('/refresh-tokens').post(validate(authValidation.refreshToken), authController.refreshToken);
 
-authRouter.route('/change-password').post(auth, validate(authValidation.changePassword), authController.changePassword);
+authRouter
+  .route('/change-password')
+  .post(auth, logAuthenticatedRequest, validate(authValidation.changePassword), authController.changePassword);
 
 authRouter.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
 

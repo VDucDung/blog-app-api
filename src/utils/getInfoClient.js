@@ -1,7 +1,8 @@
 const { env } = require('../config');
+const { REQUEST_USER_KEY } = require('../constants');
 
 const getInfoClient = (req) => {
-  const userEmail = req.user ? req.user.email : 'Anonymous';
+  const userEmail = req[REQUEST_USER_KEY] ? req[REQUEST_USER_KEY].email : 'Anonymous';
 
   let userIP = 'localhost';
 

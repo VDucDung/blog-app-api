@@ -8,8 +8,10 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 const apiRoute = require('./routes/api');
 const baseRouter = require('./routes/base.route');
+const initLogDirFile = require('./utils/initLogDirFile');
 const limiter = require('./middlewares/rate-limit.middleware');
 const { env, logger, morgan, i18nService } = require('./config');
+const { logUnauthenticatedRequest } = require('./middlewares/logger.middleware');
 const { errorConverter, errorHandler } = require('./middlewares/error.middleware');
 
 const app = express();
@@ -41,11 +43,25 @@ if (env.NODE_ENV !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
+
+if (env.NODE_ENV === 'development') {
+  mongoose.set('debug', true);
+}
+
+app.use(logUnauthenticatedRequest);
+
 app.use('/api/v1', apiRoute);
 app.use('/', baseRouter);
 
 app.use(errorConverter);
 app.use(errorHandler);
+
+try {
+  initLogDirFile();
+  logger.info('Log directory created...');
+} catch (error) {
+  logger.error(error);
+}
 
 mongoose
   .connect(env.mongoURI)
