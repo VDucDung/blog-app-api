@@ -1,12 +1,12 @@
 const httpStatus = require('http-status');
-
 const { Post, User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { postMessage } = require('../messages');
-const cacheService = require('../services/cache.service');
-const generateUniqueSlug = require('../utils/generateUniqueSlug');
 const { KEY_CACHE } = require('../constants');
-const SearchFeature = require('../utils/SearchFeature');
+const generateUniqueSlug = require('../utils/generateUniqueSlug');
+const cacheService = require('./cache.service');
+
+const cacheKeyListKey = `${KEY_CACHE}:cacheKeyList`;
 
 const getPostBySlug = async (slug) => {
   const post = await Post.findOne({ slug }).populate([
@@ -57,18 +57,25 @@ const getPostById = async (id) => {
 
 const createPost = async (postBody) => {
   postBody.slug = await generateUniqueSlug(postBody.title, Post);
-
   const post = await Post.create(postBody);
+
+  const cacheKeys = cacheService.get(cacheKeyListKey) || [];
+  cacheKeys.forEach((key) => cacheService.del(key));
+  cacheService.del(cacheKeyListKey);
+
   return post;
 };
 
 const getPostsByUser = async (userId, filter, page, pageSize, sortBy) => {
+  const key = `${KEY_CACHE}:${userId}:${filter}:posts:${page}:${pageSize}:${sortBy}`;
+  const postsCache = cacheService.get(key);
+  if (postsCache) return postsCache;
+
   let where = {};
   if (filter) {
-    where.$or = [{ title: { $regex: filter, $options: 'i' } }, { caption: { $regex: filter, $options: 'i' } }].filter(
-      Boolean,
-    );
+    where = { title: { $regex: filter, $options: 'i' } };
   }
+
   const skip = (page - 1) * pageSize;
   const total = await Post.find({ userId }).find(where).countDocuments();
   const pages = Math.ceil(total / pageSize);
@@ -89,19 +96,25 @@ const getPostsByUser = async (userId, filter, page, pageSize, sortBy) => {
     ])
     .sort({ createdAt: sortBy });
 
+  cacheService.set(key, { posts, total, page, pageSize, pages });
+
+  let cacheKeys = cacheService.get(cacheKeyListKey) || [];
+  if (!cacheKeys.includes(key)) {
+    cacheKeys.push(key);
+    cacheService.set(cacheKeyListKey, cacheKeys);
+  }
+
   return { posts, total, page, pageSize, pages };
 };
 
 const getAllPosts = async (filter, page, pageSize, sortBy) => {
-  const key = `${KEY_CACHE}:posts`;
+  const key = `${KEY_CACHE}:${filter}:posts:${page}:${pageSize}:${sortBy}`;
   const postsCache = cacheService.get(key);
   if (postsCache) return postsCache;
 
   let where = {};
   if (filter) {
-    where.$or = [{ title: { $regex: filter, $options: 'i' } }, { caption: { $regex: filter, $options: 'i' } }].filter(
-      Boolean,
-    );
+    where = { title: { $regex: filter, $options: 'i' } };
   }
 
   const skip = (page - 1) * pageSize;
@@ -125,6 +138,12 @@ const getAllPosts = async (filter, page, pageSize, sortBy) => {
 
   cacheService.set(key, { posts, total, page, pageSize, pages });
 
+  let cacheKeys = cacheService.get(cacheKeyListKey) || [];
+  if (!cacheKeys.includes(key)) {
+    cacheKeys.push(key);
+    cacheService.set(cacheKeyListKey, cacheKeys);
+  }
+
   return { posts, total, page, pageSize, pages };
 };
 
@@ -140,7 +159,10 @@ const updatePostById = async (userId, postId, updateBody) => {
   Object.assign(post, updateBody);
 
   await post.save();
-  cacheService.del(`${KEY_CACHE}:posts`);
+
+  const cacheKeys = cacheService.get(cacheKeyListKey) || [];
+  cacheKeys.forEach((key) => cacheService.del(key));
+  cacheService.del(cacheKeyListKey);
 
   return post;
 };
@@ -155,7 +177,10 @@ const deletePostById = async (userId, postId) => {
 
   await post.deleteOne();
 
-  cacheService.del(`${KEY_CACHE}:posts`);
+  const cacheKeys = cacheService.get(cacheKeyListKey) || [];
+  cacheKeys.forEach((key) => cacheService.del(key));
+  cacheService.del(cacheKeyListKey);
+
   return post;
 };
 
