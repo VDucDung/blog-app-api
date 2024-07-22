@@ -13,7 +13,7 @@ const PATH_API_DEFAULT = '/api/v1';
 const KEY_CACHE = 'key_cache';
 
 const URL_HOST = {
-  production: 'https://blog-app-api-crer.onrender.com',
+  production: 'https://blog-app-api-go1a.onrender.com',
   development: 'http://localhost:3000',
 };
 
